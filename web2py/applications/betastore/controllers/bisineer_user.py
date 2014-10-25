@@ -29,7 +29,7 @@ def register():
     """
     # read post body
     print "inside register"
-    result={}
+    result={"result":"failure"}
     response.headers['Access-Control-Allow-Headers'] = ['Content-Type']
     json_string = request.body.read()
 #     print "print request body" + request.body.read()
@@ -49,7 +49,7 @@ def register():
     else:
         result = validate_user_result
         print result
-    return result
+    return dict(result)
 
 def validate_user(user):
     """

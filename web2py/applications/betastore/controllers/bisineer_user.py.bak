@@ -40,7 +40,7 @@ def register():
     if validate_user_result['result'] == "success":
         # encrypt password if validation passed
         my_crypt = CRYPT(key=auth.settings.hmac_key)
-        user['password'] = my_crypt(user['password'])[0]
+        user['password'] = my_crypt(user['password'].encode('utf8'))[0]
         user.pop('repeat_password')
         # insert into db if validation passed
         print "inserting user " + str(user)
