@@ -53,7 +53,8 @@ auth.settings.extra_fields['auth_user'] = [
     #Field('phone_number', requires=IS_MATCH('\d{2}\-\d{2}\-\d{2}\-\d{4}')),
     Field('phone_number', 'string')
 ]
-auth.define_tables(username=True)
+auth.define_tables()
+# TODO add secure=True to the above argument so that login is done only on https
 
 ## create all tables needed by auth if not custom tables
 #auth.define_tables(username=False, signature=False)
