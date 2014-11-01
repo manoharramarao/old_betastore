@@ -25,7 +25,8 @@ else:
 
 ## by default give a view/generic.extension to all actions from localhost
 ## none otherwise. a pattern can be 'controller/function.extension'
-response.generic_patterns = ['*'] if request.is_local else []
+#response.generic_patterns = ['*'] if request.is_local else []
+response.generic_patterns = ['json']
 
 ## (optional) optimize handling of static files
 # response.optimize_css = 'concat,minify,inline'
@@ -94,3 +95,37 @@ use_janrain(auth, filename='private/janrain.key')
 
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
+
+# db.define_table(
+#     'catalog',
+#     Field('name'),
+#     Field('description'),
+#     format='%(name)s'
+# )
+
+# # category table
+# db.define_table(
+#     'category',
+#     Field('name'),
+#     Field('description'),
+#     Field('catalogs', 'list:string', default='default')
+# )
+
+# # product table
+# db.define_table(
+#     'product',
+#     Field('categories', 'list:string'),
+#     Field('name', required=True),
+#     Field('description_short', 'text'),
+#     Field('description_long', 'text'),
+#     Field('unit_price', 'double'),
+#     Field('on_sale', 'boolean'),
+#     Field('rating', 'double'),
+#     Field('image_urls', 'list:string'),
+#     Field('in_stock', 'integer'),
+#     Field('tax_rate', 'double'),
+#     Field('volume', 'list:integer'),
+#     Field('weight', 'double'),
+#     Field('variant_products', 'list:string'),
+#     format='%(name)s'
+# )

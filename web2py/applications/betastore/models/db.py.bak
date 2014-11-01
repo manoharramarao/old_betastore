@@ -13,11 +13,11 @@
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
     db = DAL('sqlite://storage.sqlite',pool_size=1,check_reserved=['all'])
-else:
-    ## connect to Google BigTable (optional 'google:datastore://namespace')
-    db = DAL('google:datastore+ndb')
-    ## store sessions and tickets there
-    session.connect(request, response, db=db)
+# else:
+#     ## connect to Google BigTable (optional 'google:datastore://namespace')
+#     db = DAL('google:datastore+ndb')
+#     ## store sessions and tickets there
+#     session.connect(request, response, db=db)
     ## or store session in Memcache, Redis, etc.
     ## from gluon.contrib.memdb import MEMDB
     ## from google.appengine.api.memcache import Client
@@ -25,7 +25,8 @@ else:
 
 ## by default give a view/generic.extension to all actions from localhost
 ## none otherwise. a pattern can be 'controller/function.extension'
-response.generic_patterns = ['*'] if request.is_local else []
+#response.generic_patterns = ['*'] if request.is_local else []
+response.generic_patterns = ['json']
 
 ## (optional) optimize handling of static files
 # response.optimize_css = 'concat,minify,inline'
@@ -53,7 +54,7 @@ auth.settings.extra_fields['auth_user'] = [
     #Field('phone_number', requires=IS_MATCH('\d{2}\-\d{2}\-\d{2}\-\d{4}')),
     Field('phone_number', 'string')
 ]
-#auth.define_tables(username=True)
+auth.define_tables()
 # TODO add secure=True to the above argument so that login is done only on https
 
 ## create all tables needed by auth if not custom tables
@@ -94,3 +95,37 @@ use_janrain(auth, filename='private/janrain.key')
 
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
+
+# db.define_table(
+#     'catalog',
+#     Field('name'),
+#     Field('description'),
+#     format='%(name)s'
+# )
+
+# # category table
+# db.define_table(
+#     'category',
+#     Field('name'),
+#     Field('description'),
+#     Field('catalogs', 'list:string', default='default')
+# )
+
+# # product table
+# db.define_table(
+#     'product',
+#     Field('categories', 'list:string'),
+#     Field('name', required=True),
+#     Field('description_short', 'text'),
+#     Field('description_long', 'text'),
+#     Field('unit_price', 'double'),
+#     Field('on_sale', 'boolean'),
+#     Field('rating', 'double'),
+#     Field('image_urls', 'list:string'),
+#     Field('in_stock', 'integer'),
+#     Field('tax_rate', 'double'),
+#     Field('volume', 'list:integer'),
+#     Field('weight', 'double'),
+#     Field('variant_products', 'list:string'),
+#     format='%(name)s'
+# )

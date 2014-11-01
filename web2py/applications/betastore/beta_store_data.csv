@@ -1,0 +1,24 @@
+TABLE bis_category
+bis_category.name,bis_category.description,bis_category.catalogs
+Pumps,"Different pumps available, different pumps available",|bisineer_stage|bisineer_online|
+
+TABLE bis_catalog
+bis_catalog.name,bis_catalog.description
+default,default catalog for the application
+bisineer_online,online catalog of bisineer store
+bisineer_stage,staged catalog of bisineer store
+
+TABLE bis_product
+bis_product.categories,bis_product.name,bis_product.description_short,bis_product.description_long,bis_product.unit_price,bis_product.on_sale,bis_product.rating,bis_product.image_urls,bis_product.in_stock,bis_product.tax_rate,bis_product.volume,bis_product.weight,bis_product.variant_products,bis_product.product_attributes,bis_product.specifications
+|Pumps|,Solar Water Heater1,Hot water at low running costs without any need for electricity saving huge energy bills.,Hot water at low running costs without any need for electricity saving huge energy bills. - long,10000.0,True,3.0,|images/sanitary_hot_water/1.jpg|images/sanitary_hot_water/2.jpg|images/sanitary_hot_water/3.jpg|images/sanitary_hot_water/4.jpg|,5000,2500.0,||,25.0,||,"{u'attributes': [{u'name': u'Features', u'description': u'<ul><p><li><h4>This is Feature 1</h4></li></p><p><li>This is Feature 2</li></p><p><li>This is Feature 3</li></p><p><li>This is Feature 4</li></p><p><li>This is Feature 5</li></p></ul>', u'isSelected': u'active'}, {u'name': u'Specifications', u'description': u'<h1>This is Specifications tab</h1>', u'isSelected': u''}, {u'name': u'Design', u'description': u'This is Design tab', u'isSelected': u''}, {u'name': u'Customer Reviews', u'description': u'This is Customer Reviews tab', u'isSelected': u''}]}",specifications
+|pumps|,Solar Water Heater,Hot water at low running costs without any need for electricity saving huge energy bills.,Hot water at low running costs without any need for electricity saving huge energy bills. - long,10000.0,True,3.0,|images/sanitary_hot_water/1.jpg|images/sanitary_hot_water/2.jpg|images/sanitary_hot_water/3.jpg|images/sanitary_hot_water/4.jpg|,5000,2500.0,||,25.0,||,"{u'attributes': [{u'isSelected': u'active', u'name': u'Features', u'description': u'<ul><p><li><h4>This is Feature 1</h4></li></p><p><li>This is Feature 2</li></p><p><li>This is Feature 3</li></p><p><li>This is Feature 4</li></p><p><li>This is Feature 5</li></p></ul>'}, {u'isSelected': u'', u'name': u'Specifications', u'description': u'<h1>This is Specifications tab</h1>'}, {u'isSelected': u'', u'name': u'Design', u'description': u'This is Design tab'}, {u'isSelected': u'', u'name': u'Customer Reviews', u'description': u'This is Customer Reviews tab'}]}",specifications
+
+TABLE auth_user
+auth_user.first_name,auth_user.last_name,auth_user.email,auth_user.password,auth_user.registration_key,auth_user.reset_password_key,auth_user.registration_id,auth_user.phone_number
+Manohar3,Sangeetham Ramarao3,manohar3@gmail.com,"pbkdf2(1000,20,sha512)$81a2a77da7055ccf$6942cd161e104736acf849d98154f1a54ed1e66d",,,,9900995843
+Manohar4,Sangeetham Ramarao4,manohar4@gmail.com,"pbkdf2(1000,20,sha512)$b7d3f6d7547f104b$010fea1be177c8c1c888620a3382efac5b20da1e",,,,9900995844
+Manohar5,Sangeetham Ramarao5,manohar5@gmail.com,"pbkdf2(1000,20,sha512)$b1d5f10f89254766$22447e41ac8f04f46af119206c6f64172afb56ca",,,,9900995845
+
+TABLE auth_group
+auth_group.role,auth_group.description
+user_5629499534213120,

@@ -1,0 +1,135 @@
+#  For Google App Engine deployment, copy this file to app.yaml
+#  and edit as required
+#  See http://code.google.com/appengine/docs/python/config/appconfig.html
+#  and http://web2py.com/book/default/chapter/11?search=app.yaml
+
+application: beta-store
+version: 1
+api_version: 1
+
+# use these lines for Python 2.7
+# upload app with: appcfg.py update web2py (where 'web2py' is web2py's root directory)
+#
+runtime: python27
+threadsafe: true    # true for WSGI & concurrent requests (Python 2.7 only)
+
+default_expiration: "24h"   # for static files
+
+handlers:
+
+# Warning! Static mapping - below - isn't compatible with 
+# the parametric router's language logic. 
+# You cannot use them together.
+
+- url: /(.*\.css)
+  mime_type: text/css
+  static_files: static/\1
+  upload: static/(.*\.css)
+
+- url: /(.*\.data)
+  mime_type: application/json
+  static_files: static/\1
+  upload: static/(.*\.data)
+
+- url: /(.*\.html)
+  mime_type: text/html
+  static_files: static/\1
+  upload: static/(.*\.html)
+
+- url: /(.*\.js)
+  mime_type: text/javascript
+  static_files: static/\1
+  upload: static/(.*\.js)
+
+- url: /(.*\.txt)
+  mime_type: text/plain
+  static_files: static/\1
+  upload: static/(.*\.txt)
+
+- url: /(.*\.xml)
+  mime_type: application/xml
+  static_files: static/\1
+  upload: static/(.*\.xml)
+
+# image files
+- url: /(.*\.(bmp|gif|ico|jpeg|jpg|png))
+  static_files: static/\1
+  upload: static/(.*\.(bmp|gif|ico|jpeg|jpg|png))
+
+# redirect to 'url + /index.html' url.
+#- url: /(.+)
+#  static_files: static/redirector.html
+#  upload: static/redirector.html
+
+# site root
+- url: /
+  static_files: static/index.html
+  upload: static/index.html
+
+#- url: /(.+?)/static/_\d.\d.\d\/(.+)
+#  static_files: applications/\1/static/\2
+#  upload: applications/(.+?)/static/(.+)
+#  secure: optional
+#  expiration: "365d"
+
+#- url: /(.+?)/static/(.+)
+#  static_files: applications/\1/static/\2
+#  upload: applications/(.+?)/static/(.+)
+#  secure: optional
+
+- url: /favicon.ico
+  static_files: applications/welcome/static/favicon.ico
+  upload: applications/welcome/static/favicon.ico
+
+- url: /robots.txt
+  static_files: applications/welcome/static/robots.txt
+  upload: applications/welcome/static/robots.txt
+
+- url: .*
+  script: gaehandler.wsgiapp    # WSGI (Python 2.7 only)
+  secure: optional
+
+admin_console:
+  pages:
+  - name: Appstats
+    url: /_ah/stats
+
+skip_files: |
+ ^(.*/)?(
+ (app\.yaml)|
+ (app\.yml)|
+ (index\.yaml)|
+ (index\.yml)|
+ (#.*#)|
+ (.*~)|
+ (.*\.py[co])|
+ (.*/RCS/.*)|
+ (\..*)|
+ (applications/examples/.*)|
+ ((examples|welcome)\.(w2p|tar))|
+ (applications/.*?/(cron|databases|errors|cache|sessions)/.*)|
+ ((logs|scripts)/.*)|
+ (anyserver\.py)|
+ (web2py\.py)|
+ ((cgi|fcgi|modpython|wsgi)handler\.py)|
+ (epydoc\.(conf|css))|
+ (httpserver\.log)|
+ (logging\.example\.conf)|
+ (route[rs]\.example\.py)|
+ (setup_(app|exe)\.py)|
+ (splashlogo\.gif)|
+ (parameters_\d+\.py)|
+ (options_std.py)|
+ (gluon/tests/.*)|
+ (gluon/rocket\.py)|
+ (contrib/(gateways|markdown|memcache|pymysql)/.*)|
+ (contrib/(populate|taskbar_widget)\.py)|
+ (google_appengine/.*)|
+ (.*\.(bak|orig))|
+ )$
+
+builtins:
+- remote_api: on
+- appstats: on
+- admin_redirect: on
+- deferred: on

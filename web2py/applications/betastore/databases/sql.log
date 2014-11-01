@@ -955,3 +955,264 @@ success!
 success!
 success!
 success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-10-26T15:12:48.434234
+CREATE TABLE bisineer_catalog(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    description CHAR(512)
+);
+success!
+timestamp: 2014-10-26T15:12:48.469465
+CREATE TABLE category(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    description CHAR(512),
+    catalogs TEXT
+);
+success!
+timestamp: 2014-10-26T15:12:48.563200
+CREATE TABLE product(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    categories TEXT,
+    name CHAR(512),
+    description_short TEXT,
+    description_long TEXT,
+    unit_price DOUBLE,
+    on_sale CHAR(1),
+    rating DOUBLE,
+    image_urls TEXT,
+    in_stock INTEGER,
+    tax_rate DOUBLE,
+    volume TEXT,
+    weight DOUBLE,
+    variant_products TEXT
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-10-26T15:13:55.661329
+CREATE TABLE bis_catalog(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    description CHAR(512)
+);
+success!
+timestamp: 2014-10-26T15:13:55.688439
+CREATE TABLE bis_category(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    description CHAR(512),
+    catalogs TEXT
+);
+success!
+timestamp: 2014-10-26T15:13:55.736153
+CREATE TABLE bis_product(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    categories TEXT,
+    name CHAR(512),
+    description_short TEXT,
+    description_long TEXT,
+    unit_price DOUBLE,
+    on_sale CHAR(1),
+    rating DOUBLE,
+    image_urls TEXT,
+    in_stock INTEGER,
+    tax_rate DOUBLE,
+    volume TEXT,
+    weight DOUBLE,
+    variant_products TEXT
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-10-27T19:58:05.703736
+CREATE TABLE bis_products_list(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    products TEXT
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-10-31T18:10:22.883083
+ALTER TABLE bis_product ADD specifications TEXT;
+timestamp: 2014-10-31T18:10:22.899665
+ALTER TABLE bis_product ADD product_attributes TEXT;
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-10-31T18:10:51.353530
+CREATE TABLE product_features(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product INTEGER REFERENCES bis_product (id) ON DELETE CASCADE,
+    feature TEXT
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

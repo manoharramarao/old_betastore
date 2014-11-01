@@ -1,0 +1,6 @@
+TABLE auth_user
+auth_user.first_name,auth_user.last_name,auth_user.email,auth_user.password,auth_user.registration_key,auth_user.reset_password_key,auth_user.registration_id,auth_user.phone_number
+Manohar2,Sangeetham Ramarao2,manohar2@gmail.com,"pbkdf2(1000,20,sha512)$aca5882beed692c6$19ad46cd49ba6a8cce590f625839d4cdeaa40a45",,,,9900995842
+Manohar3,Sangeetham Ramarao3,manohar3@gmail.com,"pbkdf2(1000,20,sha512)$81a2a77da7055ccf$6942cd161e104736acf849d98154f1a54ed1e66d",,,,9900995843
+Manohar4,Sangeetham Ramarao4,manohar4@gmail.com,"pbkdf2(1000,20,sha512)$b7d3f6d7547f104b$010fea1be177c8c1c888620a3382efac5b20da1e",,,,9900995844
+Manohar5,Sangeetham Ramarao5,manohar5@gmail.com,"pbkdf2(1000,20,sha512)$b1d5f10f89254766$22447e41ac8f04f46af119206c6f64172afb56ca",,,,9900995845
