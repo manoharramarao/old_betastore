@@ -9,64 +9,7 @@ logger.setLevel(logging.DEBUG)
 # try something like
 def index(): return dict(message="hello from bisineer_user.py")
 
-# def register():
-#     """
-#     1. checks if the user already exists
-#     2. if it is new user, then saves data to DB
-#     input json - 
-#     {
-#         "first_name": "Manohar'",
-#         "last_name": "Sangeetham Ramarao",
-#         "email": "manohar@gmail.com",
-#         "phone_number": "99-00-99-5840",
-#         "password": "test1234",
-#         "repeat_password": "test1234"
-#     }
-#     output jsons - 
-#     {'result': 'success', 'message': 'user registered successfully'}
-#     or
-#     {'result': 'failure', 'message': 'user registration failed'}
-#     """
-#     result = {}
-# 	# read post body
-#     print "inside register"
-# 	#print request.env.web2py_runtime_gae
-#     response.headers['Access-Control-Allow-Headers'] = ['Content-Type']
-#     json_string = request.body.read()
-#     user = json.loads(json_string)
-#     validate_user_result = validate_user(user)
-#     if validate_user_result['result'] == "success":
-#         # encrypt password if validation passed
-#         my_crypt = CRYPT(key=auth.settings.hmac_key)
-#         user['password'] = my_crypt(user['password'].encode('utf8'))[0]
-#         user.pop('repeat_password')
-#         # insert into db if validation passed
-#         print "inserting user " + str(user)
-#         row = db.auth_user.insert(**user).as_dict()
-#         if bool(row):
-#             result = {"result": "success", "msg": "Registration successful"}
-#     else:
-#         result = validate_user_result
-#     return result
-
 def register():
-    """
-    1. checks if the user already exists
-    2. if it is new user, then saves data to DB
-    input json - 
-    {
-        "first_name": "Manohar'",
-        "last_name": "Sangeetham Ramarao",
-        "email": "manohar@gmail.com",
-        "phone_number": "99-00-99-5840",
-        "password": "test1234",
-        "repeat_password": "test1234"
-    }
-    output jsons - 
-    {'result': 'success', 'message': 'user registered successfully'}
-    or
-    {'result': 'failure', 'message': 'user registration failed'}
-    """
     json_string = request.body.read()
     user = json.loads(json_string)
     user['password'] = user['password'].encode('utf8')

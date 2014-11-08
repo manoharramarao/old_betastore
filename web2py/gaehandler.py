@@ -76,8 +76,8 @@ def log_stats(fun):
         return executed_function
     return newfun
 
-
-logging.basicConfig(level=logging.INFO)
+# changed from INFO to DEBUG by Manohar
+logging.basicConfig(level=logging.DEBUG)
 
 
 def wsgiapp(env, res):

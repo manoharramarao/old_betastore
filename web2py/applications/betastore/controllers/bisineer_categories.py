@@ -11,9 +11,9 @@ def get_categories():
 		fields = ['name']
 		sel = [db.bis_category[field] for field in fields]
 		rows = db(query).select(*sel, projection=True)
-		print rows
 		#rows = db(db.bis_category.ALL).select(*sel, projection=True).as_dict()
 		result['categories'] = rows
+		print str(result)
 	except Exception, e:
 		logging.error(str(e))
 		result = {"result": "failure", "msg": "Something went wrong. Please try again"}

@@ -12,6 +12,15 @@ indexes:
 
 - kind: bis_product
   properties:
+  - name: categories
+  - name: description_short
+  - name: image_urls
+  - name: name
+  - name: rating
+  - name: unit_price
+
+- kind: bis_product
+  properties:
   - name: description_short
   - name: image_urls
   - name: name
