@@ -63,7 +63,8 @@ db.define_table(
     Field('total_amount', 'double'),
     Field('discount', 'double'),
     Field('tax', 'double'),
-    Field('created_on','datetime')
+    Field('created_on','datetime'),
+    Field('modified_on', 'datetime')
 )
 
 # for future, when you use mongoDB, probably you can merge these

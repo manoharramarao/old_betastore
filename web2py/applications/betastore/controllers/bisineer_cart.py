@@ -8,30 +8,35 @@ from gluon.storage import Storage
 logger = logging.getLogger("bisineer_cart")
 logger.setLevel(logging.DEBUG)
 
-def add_to_cart():
+def flush_cart():
 	json_string = request.body.read()
-	product = Storage(json.loads(json_string))
+	cart = Storage(json.loads(json_string))
 	user = session.auth.user;
-	cart = {}
-	queries = []
-	queries.append(db.bis_cart_order.email == user.email)
-	queries.append(db.bis_cart_order.status == "cart")
-	query = reduce(lambda a,b:(a&b), queries)
-	cart = db(query).select()
-	new_order_line_item = Storage()
-	if bool(cart):
-		print str(cart)
-	else:
-		new_order_line_item.product_id = product.id
-		if not hasattr(product, 'quantity') or product.quantity is None:
-			new_order_line_item.quantity = 1
+	# queries = []
+	# queries.append(db.bis_cart_order.email == user.email)
+	# queries.append(db.bis_cart_order.status == "cart")
+	# query = reduce(lambda a,b:(a&b), queries)
+	# cart = db(query).select()
+	# new_order_line_item = Storage()
+	# if bool(cart):
+		# bail out
+	modified_line_items = []
+	for line_item in cart.line_items:
+		print str(line_item)
+		line_item = Storage(line_item)
+		if not hasattr(line_item, 'id') or line_item.id is None:
+			print "inside if"
+			line_item.created_on = datetime.datetime.utcnow()
+			line_item.id = db['bis_line_item'].insert(**line_item)
 		else:
-			new_order_line_item.quantity = product.quantity
-		new_order_line_item.created_on = datetime.datetime.utcnow()
-		line_item = db['bis_line_item'].insert(**new_order_line_item)
-		print "line_item is " + str(line_item)
-	print new_order_line_item
-	return new_order_line_item
+			print "inside else"
+			line_item.modified_on = datetime.datetime.utcnow()
+			db(db['bis_line_item']._id==line_item.id).update(**line_item)
+		modified_line_items.append(line_item)
+
+	cart.line_items = modified_line_items
+	print(str(cart))
+	return cart
 
 	# if cart is null, create one
 
