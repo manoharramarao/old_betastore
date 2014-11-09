@@ -10,6 +10,12 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: bis_line_item
+  properties:
+  - name: order_id
+  - name: product_id
+  - name: quantity
+
 - kind: bis_product
   properties:
   - name: categories

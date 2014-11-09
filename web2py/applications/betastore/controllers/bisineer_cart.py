@@ -76,6 +76,7 @@ logger.setLevel(logging.DEBUG)
 # 	cart.line_items = modified_line_items
 # 	return cart
 
+@auth.requires_login()
 def flush_cart():
 	# TODO removing multiple line items for same product needs to be taken care
 	json_string = request.body.read()
@@ -102,4 +103,15 @@ def flush_cart():
 			line_item_id = temp_line_item.id
 		new_line_item_ids.append(line_item_id)
 	order.update_record(line_items=new_line_item_ids)
+	return cart
+
+@auth.requires_login()
+def get_cart():
+	user = session.auth.user
+	order = Storage()
+	cart = Storage()
+	order = db((db.bis_cart_order.email == user.email) & (db.bis_cart_order.status == "cart")).select().first()
+	cart.line_items = []
+	if order is not None:
+		cart.line_items = db((db.bis_line_item.order_id == order.id)).select(db.bis_line_item.product_id, db.bis_line_item.quantity, projection=True)
 	return cart
