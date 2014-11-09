@@ -58,8 +58,9 @@ db.define_table(
 # order line items - 1 line item per product in the order
 db.define_table(
     'bis_line_item',
+    Field('order_id'),
     Field('product_id'),
-    Field('quantity'),
+    Field('quantity', 'integer'),
     Field('total_amount', 'double'),
     Field('discount', 'double'),
     Field('tax', 'double'),
