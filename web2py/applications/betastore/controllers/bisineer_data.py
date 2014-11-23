@@ -1,8 +1,4 @@
-import logging
 import gluon.contrib.simplejson as json
-
-logger = logging.getLogger("bisineer_data")
-logger.setLevel(logging.DEBUG)
 
 #@auth.requires(requires_login=True, requires_membership='admin')
 def import_bisineer_data():

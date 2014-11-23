@@ -1,12 +1,8 @@
-import logging
 import gluon.contrib.simplejson as json
 from collections import namedtuple
 import datetime
 from gluon.storage import Storage
 #import jsonpickle
-
-logger = logging.getLogger("bisineer_cart")
-logger.setLevel(logging.DEBUG)
 
 # def flush_cart():
 # 	json_string = request.body.read()
@@ -79,13 +75,17 @@ logger.setLevel(logging.DEBUG)
 @auth.requires_login()
 def flush_cart():
 	# TODO removing multiple line items for same product needs to be taken care
+	# TODO yet to implement transactions
+	# cart = what we get from client
+	# order = what we have on server
 	json_string = request.body.read()
 	cart = Storage(json.loads(json_string))
 	user = session.auth.user
 	order = Storage()
 	order.email = user.email
 	order.status = "cart"
-	order_id = db.bis_cart_order.update_or_insert((db.bis_cart_order.email == order.email) & (db.bis_cart_order.status == order.status), **order)
+	order_id = db.bis_cart_order.update_or_insert((db.bis_cart_order.email == order.email) & (db.bis_cart_order.status == order.status), **order) 
+	# in the above statement, id is returned only if it is insert else boolean is returned. Hence the below 3 lines
 	if order_id is None:
 		order = db((db.bis_cart_order.email == order.email) & (db.bis_cart_order.status == order.status)).select().first()
 		order_id = order.id
@@ -113,5 +113,7 @@ def get_cart():
 	order = db((db.bis_cart_order.email == user.email) & (db.bis_cart_order.status == "cart")).select().first()
 	cart.line_items = []
 	if order is not None:
-		cart.line_items = db((db.bis_line_item.order_id == order.id)).select(db.bis_line_item.product_id, db.bis_line_item.quantity, projection=True)
+		cart.line_items = db((db.bis_line_item.order_id == order.id)).select(db.bis_line_item.product_id, db.bis_line_item.quantity, db.bis_line_item.id, projection=True)
+	for line_item in cart.line_items:
+		print line_item
 	return cart

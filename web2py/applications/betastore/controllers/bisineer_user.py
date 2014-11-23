@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import logging
 import gluon.contrib.simplejson as json
-
-logger = logging.getLogger("bisineer_user")
-logger.setLevel(logging.DEBUG)
 
 # try something like
 def index(): return dict(message="hello from bisineer_user.py")
@@ -46,7 +42,7 @@ def login():
         else:
             result = {"result": "failure", "msg": "email and password don't match"}
     except Exception, e:
-        logging.error(str(e))
+        logger.error(str(e))
         result = {"result": "failure", "msg": "Ouch!! something went wrong. Please try again"}
     return result
 
@@ -56,7 +52,7 @@ def logout():
         session.flash = auth.messages.logged_out
         result = {"result": "success", "msg": "successfully logged out"}
     except Exception, e:
-        logging.error(str(e))
+        logger.error(str(e))
         result = {"result": "failure", "msg": "Ouch!! something went wrong. Please try again"}
     print result
     return result
@@ -66,7 +62,7 @@ def get_user():
     try:
         result = dict(session.auth.user);
     except Exception, e:
-        logging.error(str(e));
+        logger.error(str(e));
         result = {"result": "failure", "msg": "Something went wrong. Please try again"}
     return result
 
@@ -79,6 +75,6 @@ def get_product():
         else:
             result = {"result": "failure", "msg": "Something went wrong. Please try again"}
     except Exception, e:
-        logging.error(str(e))
+        logger.error(str(e))
         result = {"result": "failure", "msg": "Something went wrong. Please try again"}
     return result

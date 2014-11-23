@@ -1,0 +1,5 @@
+
+
+class HTTPStatusCodes:
+	BUSINESS_EXCEPTION = "597"
+	TECHNICAL_EXCEPTION = "596"

@@ -1,8 +1,4 @@
-import logging
 import gluon.contrib.simplejson as json
-
-logger = logging.getLogger("bisineer_categories")
-logger.setLevel(logging.DEBUG)
 
 def get_categories():
 	try:
@@ -15,6 +11,6 @@ def get_categories():
 		result['categories'] = rows
 		print str(result)
 	except Exception, e:
-		logging.error(str(e))
+		logger.error(str(e))
 		result = {"result": "failure", "msg": "Something went wrong. Please try again"}
 	return result

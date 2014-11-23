@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+import logging
+from gluon import current
+
+logger = logging.getLogger("web2py.app.betastore")
+logger.setLevel(logging.DEBUG) # remove this when you go live
+current.db = db
+current.logger = logger
 
 # catalog table
 db.define_table(
@@ -40,7 +47,7 @@ db.define_table(
 # cart and order - same table is being used
 db.define_table(
     'bis_cart_order',
-    Field('email'),
+    Field('email'), # TODO need to change this relation to be based on user_id than email
     Field('billing_id'),
     Field('shipping_id'),
     Field('created_on','datetime'),
@@ -101,4 +108,23 @@ db.define_table(
 db.define_table(
     'bis_products_list',
     Field('products', 'json')
+)
+
+# address table
+db.define_table(
+    'bis_address',
+    Field('name'),
+    Field('street_address'),
+    Field('landmark'),
+    Field('city'),
+    Field('state'),
+    Field('country'),
+    Field('pincode'),
+    Field('phone_number'),
+    Field('type'),
+    Field('user_id'),
+    Field('user_group_id'),
+    Field('order_id'),
+    Field('created_on','datetime'),
+    Field('modified_on', 'datetime')
 )

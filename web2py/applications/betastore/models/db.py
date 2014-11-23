@@ -10,6 +10,14 @@
 # request.requires_https()
 #from gluon.contrib.gql import GQLDB
 #db=GQLDB()
+
+
+import logging
+
+logger = logging.getLogger("web2py.app.betastore")
+logger.setLevel(logging.DEBUG) # remove this when you go live
+
+
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
     db = DAL('sqlite://storage.sqlite',pool_size=1,check_reserved=['all'])

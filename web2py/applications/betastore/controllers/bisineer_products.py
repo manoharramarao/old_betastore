@@ -1,15 +1,11 @@
-import logging
 import gluon.contrib.simplejson as json
-
-logger = logging.getLogger("bisineer_products")
-logger.setLevel(logging.DEBUG)
 
 def get_products():
 	try:
 		json_string = request.body.read()
-		logging.info(json_string)
+		logger.info(json_string)
 		category = json.loads(json_string)
-		logging.info("category name sent is " + category['categoryName'])
+		logger.info("category name sent is " + category['categoryName'])
 		result = {}
 		query1 = db.bis_product.id > 0
 		query2 = db.bis_product.categories.contains(category['categoryName'])
@@ -28,14 +24,14 @@ def get_products():
 					# TODO Fix me. It is complaining categories attribute doesn't exist
 					del row[field]
 		#rows = db().select(*sel, projection=True, cache=(cache.ram,60), cacheable=True) # use this for caching
-		logging.info(rows)
+		logger.info(rows)
 		if bool(rows):
 			result['products'] = rows
 			#result['pages'] = pages
 		else:
 			result = {"result": "failure", "msg": "no products available"}
 	except Exception, e:
-		logging.error(str(e))
+		logger.error(str(e))
 		result = {"result": "failure", "msg": "Something went wrong. Please try again"}
 	return result
 
@@ -51,6 +47,6 @@ def get_product():
         else:
             result = {"result": "failure", "msg": "Something went wrong. Please try again"}
     except Exception, e:
-        logging.error(str(e))
+        logger.error(str(e))
         result = {"result": "failure", "msg": "Something went wrong. Please try again"}
     return result	
