@@ -5,7 +5,6 @@ from gluon import current
 logger = logging.getLogger("web2py.app.betastore")
 logger.setLevel(logging.DEBUG) # remove this when you go live
 current.db = db
-current.logger = logger
 
 # catalog table
 db.define_table(

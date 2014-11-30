@@ -1,6 +1,6 @@
 from collections import namedtuple
 from gluon.storage import Storage
-from applications.betastore.modules.daos import address_dao
+from daos import address_dao
 from services import address_service
 from bisineer_http_status_codes import HTTPStatusCodes
 

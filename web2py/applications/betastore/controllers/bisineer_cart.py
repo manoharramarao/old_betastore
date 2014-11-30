@@ -85,13 +85,13 @@ def flush_cart():
 	order.email = user.email
 	order.status = "cart"
 	order_id = db.bis_cart_order.update_or_insert((db.bis_cart_order.email == order.email) & (db.bis_cart_order.status == order.status), **order) 
-	# in the above statement, id is returned only if it is insert else boolean is returned. Hence the below 3 lines
+	# in the above statement, id is returned only if it is insert. Hence the below 3 lines
 	if order_id is None:
 		order = db((db.bis_cart_order.email == order.email) & (db.bis_cart_order.status == order.status)).select().first()
 		order_id = order.id
 	else:
 		order = db(db.bis_cart_order.id == order_id).select().first()
-	db(db.bis_line_item.order_id == order_id).delete()
+	db(db.bis_line_item.order_id == order_id).delete() # deleting all line items for that order in DB
 	order.line_items = []
 	new_line_item_ids = []
 	for line_item in cart.line_items:
