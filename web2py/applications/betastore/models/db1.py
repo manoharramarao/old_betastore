@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-import logging
+from gluon.custom_import import track_changes; track_changes(True) # this is used to reload modules during import, if they are changed
 from gluon import current
 
 logger = logging.getLogger("web2py.app.betastore")
 logger.setLevel(logging.DEBUG) # remove this when you go live
+current.logger = logging.getLogger("web2py.app.betastore")
+current.logger.setLevel(logging.DEBUG) # remove this when you go live
 current.db = db
 
 # catalog table
