@@ -53,6 +53,12 @@ def login():
     else:
         raise HTTP(510, "email and password don't match")
     
+def is_logged_in():
+    if auth.is_logged_in():
+        return dict(session.auth.user)
+    else:
+        raise HTTP(401, 'anonymous user')
+
 
 def logout():
     try:

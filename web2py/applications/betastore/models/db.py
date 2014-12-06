@@ -57,7 +57,7 @@ auth = Auth(db)
 service = Service()
 plugins = PluginManager()
 
-# edited by bisineer team
+# edited by team
 auth.settings.extra_fields['auth_user'] = [
     #Field('phone_number', requires=IS_MATCH('\d{2}\-\d{2}\-\d{2}\-\d{4}')),
     Field('phone_number', 'string')

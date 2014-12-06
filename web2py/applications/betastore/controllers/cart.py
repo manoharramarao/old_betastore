@@ -113,9 +113,13 @@ def flush_cart():
 	else creates new cart with the input.
 	This is called everytime new item is added to the cart
 	"""
-	cart = Storage(json.loads(request.body.read()))
-	logger.debug("new cart sent is " + str(cart))
-	cart_order_service.flush_cart(cart)
+	try:
+		cart = Storage(json.loads(request.body.read()))
+		logger.debug("new cart sent is " + str(cart))
+		cart_order_service.flush_cart(cart)
+	except Exception, e:
+		logger.error(str(e))
+		raise HTTP(500, 'Ouch!! something went wrong. Please try again')
 	return
 
 

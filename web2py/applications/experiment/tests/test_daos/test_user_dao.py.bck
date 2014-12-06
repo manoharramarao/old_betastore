@@ -1,0 +1,55 @@
+import sys
+import os
+web2py_path = '../../../'
+sys.path.append(os.path.realpath(web2py_path))
+os.chdir(web2py_path)
+
+import unittest
+import cPickle as pickle
+from gluon.globals import Request, Session, Storage, Response
+from gluon.shell import exec_environment
+from gluon.storage import Storage
+from gluon import *
+from gluon import current
+
+#from applications.experiment.daos import user_dao
+
+
+#db = test_db
+execfile("/home/manohar/work/bisineer_store/web2py/applications/experiment/controllers/user.py", globals())
+
+class TestUserController(unittest.TestCase):
+	# def __init__(self, p):
+	# 	global auth, session, request
+	# 	unittest.TestCase.__init__(self, p)
+	# 	self.session = pickle.dumps(current.session)
+	# 	current.request.application = 'experiment'
+	# 	current.request.controller = 'user'
+	# 	self.request = pickle.dumps(current.request)
+
+	def setUp(self):
+		self.request = Request()
+		self.controller = exec_environment('applications/experiment/controllers/user.py', request=self.request)
+		self.session = Session()
+		# current.session = pickle.loads(self.session)
+		# current.request = pickle.loads(self.request)
+		self.request.body = {'email':'manohar2@gmail.com', 'password':'test1234'}
+		self.controller.login()
+		auth = Auth(globals(), db)
+		auth.define_tables()
+
+	# def emptyUserDB(self):
+	# 	db(db.auth.user.id>0).delete()
+	# 	db.commit()
+
+	def testLogin(self):
+		#self.emptyUserDB()
+		self.assertTrue(auth.is_logged_in())
+		self.assertEquals(auth.user.email, 'manohar2@gmail')
+
+
+
+suite = unittest.TestSuite()
+suite.addTest(unittest.makeSuite(TestUserController))
+unittest.TextTestRunner(verbosity=2).run(suite)
+

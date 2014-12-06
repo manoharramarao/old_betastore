@@ -10,21 +10,14 @@ def save(line_item):
 	Inserts if no record found
 	"""
 	if line_item.id is not None:
-		current.logger.debug("inside line_item.id is not None")
-		current.logger.debug("line_item.id is " + str(line_item.id))
 		existing_line_item = current.db(current.db.bis_line_item.id == line_item.id).select().first()
 	else:
-		current.logger.debug("else")
-		current.logger.debug("line_item.order_id is " + str(line_item.order_id))
-		current.logger.debug("line_item.product_id is " + str(line_item.product_id))
 		# TODO below statement is not working. Need to fix this. Because of this we have extra method inside cart_order_service.merge_line_items_with_same_product
 		existing_line_item = current.db((current.db.bis_line_item.order_id == line_item.order_id) & (current.db.bis_line_item.product_id == line_item.product_id)).select().first()
 	if existing_line_item is not None:
-		current.logger.debug("existing_line_item is not None")
 		line_item.id = existing_line_item.id
 		line_item = current.db(current.db.bis_line_item.id == existing_line_item.id).update(**line_item)
 	else:
-		current.logger.debug("existing_line_item is None")
 		line_item.id = current.db.bis_line_item.insert(**line_item)
 	return line_item
 
