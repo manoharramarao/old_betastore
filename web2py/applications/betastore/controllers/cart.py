@@ -133,7 +133,8 @@ def get_cart():
 	order = db((db.bis_cart_order.email == user.email) & (db.bis_cart_order.status == "cart")).select().first()
 	cart.line_items = []
 	if order is not None:
-		cart.line_items = db((db.bis_line_item.order_id == order.id)).select(db.bis_line_item.product_id, db.bis_line_item.quantity, db.bis_line_item.id, projection=True)
+		cart.line_items = db((db.bis_line_item.order_id == order.id)).select(db.bis_line_item.product_id, db.bis_line_item.quantity, 
+			db.bis_line_item.id, db.bis_line_item.description_short,db.bis_line_item.name, projection=True)
 	for line_item in cart.line_items:
 		print line_item
 	return cart
@@ -142,4 +143,8 @@ def get_prices():
 	"""
 	returns prices for all line items
 	"""
-	pass
+	logger.debug("inside get_prices")
+	cart = Storage(json.loads(request.body.read()))
+	cart_order_service.get_prices(cart)
+	logger.debug("cart after getting prices" + str(cart))
+	return cart

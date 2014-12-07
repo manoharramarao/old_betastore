@@ -23,13 +23,10 @@ def get_products():
 				for field in none_fields:
 					# TODO Fix me. It is complaining categories attribute doesn't exist
 					del row[field]
-		#rows = db().select(*sel, projection=True, cache=(cache.ram,60), cacheable=True) # use this for caching
-		logger.info(rows)
-		if bool(rows):
 			result['products'] = rows
-			#result['pages'] = pages
 		else:
 			result = {"result": "failure", "msg": "no products available"}
+		#rows = db().select(*sel, projection=True, cache=(cache.ram,60), cacheable=True) # use this for caching
 	except Exception, e:
 		logger.error(str(e))
 		result = {"result": "failure", "msg": "Something went wrong. Please try again"}

@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from gluon.custom_import import track_changes; track_changes(True) # this is used to reload modules during import, if they are changed
 from gluon import current
+from gluon.storage import Storage
 
 logger = logging.getLogger("web2py.app.betastore")
 logger.setLevel(logging.DEBUG) # remove this when you go live
 current.logger = logging.getLogger("web2py.app.betastore")
 current.logger.setLevel(logging.DEBUG) # remove this when you go live
 current.db = db
+auth.settings.create_user_groups = False
+current.betastore_current = Storage()
 
 # catalog table
 db.define_table(
@@ -95,7 +98,9 @@ db.define_table(
     Field('discount', 'double'),
     Field('tax', 'double'),
     Field('created_on','datetime'),
-    Field('modified_on', 'datetime')
+    Field('modified_on', 'datetime'),
+    Field('description_short', 'string', required=True),
+    Field('name', required=True),
 )
 
 # for future, when you use mongoDB, probably you can merge these

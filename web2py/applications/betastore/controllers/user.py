@@ -10,20 +10,27 @@ def register():
     registers user by using auth.bare_register method
     """
     try:
+        msg = 'Ouch!! something went wrong. Please try again later'
         input_json = request.body.read()
         user = Storage(json.loads(input_json))
         result = Storage()
         user.password = user.password.encode('utf8')
         user = auth.register_bare(**user)
-        logger.debug("user returned is " + str(user))
+        if user is not None:
+            default_group = db(db.auth_group.role=="default").select().first().as_dict()
+            current.logger.debug("group is " + str(default_group))
+            current.logger.debug("user is " + str(user))
+            auth.add_membership(default_group['id'], user.id) # add user to default user group
+            logger.debug("user returned is " + str(user))
+            result.msg = "Registration success"
+            return result
+        else:
+            msg="Registration failed"
+            raise HTTP(500, msg)
     except Exception, e:
         logger.error(str(e))
-        raise HTTP(500, 'Ouch!! something went wrong. Please try again later')
-    if not user:
-        raise HTTP(510, 'Registration failed')
-    else:
-        result.msg = "Registration success"
-        return result
+        raise HTTP(500, msg)
+        
 
 def validate_user(user):
     """
