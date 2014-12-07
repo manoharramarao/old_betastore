@@ -135,3 +135,9 @@ def get_cart():
 	for line_item in cart.line_items:
 		print line_item
 	return cart
+
+def get_prices():
+	"""
+	returns prices for all line items
+	"""
+	pass

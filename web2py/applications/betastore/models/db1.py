@@ -11,17 +11,20 @@ current.db = db
 # catalog table
 db.define_table(
     'bis_catalog',
-    Field('name'),
-    Field('description'),
+    Field('name', required=True),
+    Field('description', required=True),
+    Field('code', represent=lambda p,r: r.name),
     format='%(name)s'
 )
 
 # category table
 db.define_table(
     'bis_category',
-    Field('name'),
-    Field('description'),
-    Field('catalogs', 'list:string', default='default')
+    Field('name', required=True),
+    Field('description', required=True),
+    Field('catalogs', 'list:string', default='default'),
+    Field('code', represent=lambda p,r: r.name),
+    format='%(name)s'
 )
 
 # product table
@@ -29,7 +32,7 @@ db.define_table(
     'bis_product',
     Field('categories', 'list:string'),
     Field('name', required=True),
-    Field('description_short', 'string'),
+    Field('description_short', 'string', required=True),
     Field('description_long', 'text'),
     Field('unit_price', 'double'),
     Field('on_sale', 'boolean'),
@@ -42,7 +45,26 @@ db.define_table(
     Field('variant_products', 'list:string'),
     Field('product_attributes', 'json'),
     Field('specifications', 'text'),
+    Field('code', represent=lambda p,r: r.name),
     format='%(name)s'
+)
+
+db.define_table(
+    'bis_price_type',
+    Field('name', required=True),
+    Field('price_description'),
+    Field('code', represent=lambda p,r: r.name),
+    format='%(name)s'
+)
+
+db.define_table(
+    'bis_price',
+    Field('product', 'reference bis_product'),
+    Field('price_type', 'reference bis_price_type'),
+    Field('amount', 'double', required=True),
+    Field('user_group', 'reference auth_group'),
+    Field('code', represent=lambda p,r: '%s-%s-%s' %(r.product.name, r.user_group.role, r.price_type.name)),
+    format=lambda r: '%s-%s-%s' %(r.product.name, r.user_group.role, r.price_type.name)
 )
 
 # cart and order - same table is being used
@@ -118,11 +140,11 @@ db.define_table(
     Field('street_address'),
     Field('landmark'),
     Field('city'),
-    Field('state'),
+    Field('bis_state'),
     Field('country'),
     Field('pincode'),
     Field('phone_number'),
-    Field('type'),
+    Field('bis_type'),
     Field('user_id'),
     Field('user_group_id'),
     Field('order_id'),

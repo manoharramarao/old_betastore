@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.TypeError'> 'NoneType' object is not callable"
+p3
+sS'layer'
+p4
+S'/home/manohar/work/bisineer_store/web2py/applications/experiment/controllers/test_controller.py'
+p5
+sS'code'
+p6
+S'def test():\n\tprint "inside test controller"\n    \ndef test_record_representation():\n    product = "solar water heater"\n    price_type = "default"\n    user_group = "user_1 (1)"\n    id = "1"\n    row = db(db.price.id == "1").select().first()\n    #record1 = rows.render(0)\n    record1 = db.price.id.represent(row.id)\n    print db.price.id.represent(row.id, row)\n    return dict(msg=str(record1))\n\nresponse._vars=response._caller(test_record_representation)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/manohar/work/bisineer_store/web2py/gluon/restricted.py", line 224, in restricted\n    exec ccode in environment\n  File "/home/manohar/work/bisineer_store/web2py/applications/experiment/controllers/test_controller.py", line 15, in <module>\n  File "/home/manohar/work/bisineer_store/web2py/gluon/globals.py", line 392, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/manohar/work/bisineer_store/web2py/applications/experiment/controllers/test_controller.py", line 11, in test_record_representation\n    record1 = db.price.id.represent(row.id)\nTypeError: \'NoneType\' object is not callable\n'
+p11
+s.

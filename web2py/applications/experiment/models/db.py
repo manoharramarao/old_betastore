@@ -88,7 +88,38 @@ use_janrain(auth, filename='private/janrain.key')
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
 
+#################################################
+# creating custom tables
+#################################################
+db.define_table(
+    'product',
+    Field('product_name'),
+    Field('product_description'),
+    format='%(product_name)s'
+)
 
+db.define_table(
+    'price_type',
+    Field('price_type'),
+    Field('price_type_description'),
+    format='%(price_type)s'
+)
+
+db.define_table(
+    'price',
+    Field('product', 'reference product'),
+    Field('price_type', 'reference price_type'),
+    Field('amount'),
+    Field('user_group', 'reference auth_group'),
+    Field('code', represent=lambda p,r: '%s-%s-%s' %(r.product.product_name, r.user_group.role, r.price_type.price_type)),
+    format=lambda r: '%s-%s-%s' %(r.product.product_name, r.user_group.role, r.price_type.price_type)
+)
+#db.price.code.represent = lambda p,r: '%s-%s-%s' %(r.product.name, r.user_group.role, r.price_type.name)
+db.define_table(
+    'price_per_user',
+    Field('product', 'reference product'),
+    Field('price', 'reference price')
+)
 ################################################
 # Creating DB for testing
 ################################################

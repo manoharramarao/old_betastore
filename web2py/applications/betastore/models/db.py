@@ -20,10 +20,10 @@ logger.setLevel(logging.DEBUG) # remove this when you go live
 
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
-    db = DAL('sqlite://storage.sqlite',pool_size=1,check_reserved=['all'])
+    db = DAL('sqlite://storage.sqlite',pool_size=1,check_reserved=['all'], lazy_tables=True)
 else:
     ## connect to Google BigTable (optional 'google:datastore://namespace')
-    db = DAL('google:datastore+ndb')
+    db = DAL('google:datastore+ndb', lazy_tables=True)
     ## store sessions and tickets there
     session.connect(request, response, db=db)
     ## or store session in Memcache, Redis, etc.

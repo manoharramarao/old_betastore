@@ -1216,3 +1216,200 @@ success!
 success!
 success!
 success!
+success!
+success!
+success!
+success!
+timestamp: 2014-12-06T19:45:18.143749
+ALTER TABLE bis_catalog ADD code CHAR(512);
+success!
+success!
+timestamp: 2014-12-06T19:45:18.238057
+CREATE TABLE bis_price_type(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    price_description CHAR(512)
+);
+success!
+timestamp: 2014-12-06T19:45:18.259979
+CREATE TABLE bis_price(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product INTEGER REFERENCES bis_product (id) ON DELETE CASCADE,
+    price_type INTEGER REFERENCES bis_price_type (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    user_group INTEGER REFERENCES auth_group (id) ON DELETE CASCADE,
+    code CHAR(512)
+);
+success!
+timestamp: 2014-12-06T19:45:18.303456
+CREATE TABLE bis_cart_order(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(512),
+    billing_id CHAR(512),
+    shipping_id CHAR(512),
+    created_on TIMESTAMP,
+    status CHAR(512),
+    product_cost DOUBLE,
+    total_amount DOUBLE,
+    discount DOUBLE,
+    tax DOUBLE,
+    shipping_cost DOUBLE,
+    amount_due DOUBLE,
+    amount_paid DOUBLE,
+    line_items TEXT
+);
+success!
+timestamp: 2014-12-06T19:45:18.350494
+CREATE TABLE bis_line_item(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id CHAR(512),
+    product_id CHAR(512),
+    quantity INTEGER,
+    total_amount DOUBLE,
+    discount DOUBLE,
+    tax DOUBLE,
+    created_on TIMESTAMP,
+    modified_on TIMESTAMP
+);
+success!
+timestamp: 2014-12-06T19:45:18.366604
+CREATE TABLE bis_delivery(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id CHAR(512),
+    delivered_ondatetime CHAR(512),
+    invoice_id CHAR(512)
+);
+success!
+timestamp: 2014-12-06T19:45:18.386115
+CREATE TABLE bis_invoice(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    invoice_item_id CHAR(512)
+);
+success!
+timestamp: 2014-12-06T19:45:18.399679
+CREATE TABLE bis_invoice_item(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id CHAR(512),
+    quantity_id CHAR(512),
+    amount CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-12-06T19:49:32.159141
+CREATE TABLE bis_address(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    street_address CHAR(512),
+    landmark CHAR(512),
+    city CHAR(512),
+    bis_state CHAR(512),
+    country CHAR(512),
+    pincode CHAR(512),
+    phone_number CHAR(512),
+    bis_type CHAR(512),
+    user_id CHAR(512),
+    user_group_id CHAR(512),
+    order_id CHAR(512),
+    created_on TIMESTAMP,
+    modified_on TIMESTAMP
+);
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-12-06T19:51:07.361876
+ALTER TABLE bis_category ADD code CHAR(512);
+success!
+timestamp: 2014-12-06T19:51:07.425258
+ALTER TABLE bis_product ADD code CHAR(512);
+success!
+timestamp: 2014-12-06T19:51:07.478769
+ALTER TABLE bis_price_type ADD code CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
