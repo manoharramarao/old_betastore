@@ -32,7 +32,7 @@ def flush_cart(cart):
 	# 	line_item = line_item_dao.save(line_item)
 	# 	server_cart.line_items.append(line_item.id)
 	# save line items to DB and update order.line_items array to hold IDs
-	server_cart = _save_line_items(line_items, order)
+	server_cart = _save_line_items(line_items, server_cart)
 	server_cart = cart_order_dao.save(server_cart)
 	return server_cart
 
@@ -52,6 +52,7 @@ def delete_line_items(line_items):
 	pass
 
 def _save_line_items(line_items, order):
+	line_items = _clean_line_items(line_items)
 	for line_item in line_items:
 		line_item = Storage(line_item)
 		line_item.order_id = order.id
@@ -69,3 +70,13 @@ def _merge_line_items_with_same_product(line_items):
 		else:
 			new_line_items[str(line_item.product_id)] = line_item
 	return new_line_items.values()
+
+def _clean_line_items(line_items):
+	line_item_attributes = ['id', 'order_id', 'product_id', 'quantity', 'total_amount', 'discount', 'tax', 'created_on', 'line_item']
+	new_line_items = []
+	for line_item in line_items:
+		for key in line_item.keys():
+			if key not in line_item_attributes:
+				del line_item[key]
+		new_line_items.append(line_item)
+	return new_line_items

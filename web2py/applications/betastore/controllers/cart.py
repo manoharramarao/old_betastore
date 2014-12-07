@@ -1,6 +1,7 @@
 import gluon.contrib.simplejson as json
 from collections import namedtuple
 import datetime
+import traceback
 from gluon.storage import Storage
 from services import cart_order_service
 #import jsonpickle
@@ -119,6 +120,7 @@ def flush_cart():
 		cart_order_service.flush_cart(cart)
 	except Exception, e:
 		logger.error(str(e))
+		traceback.print_exc()
 		raise HTTP(500, 'Ouch!! something went wrong. Please try again')
 	return
 
