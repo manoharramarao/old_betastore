@@ -26,10 +26,10 @@ handlers:
   static_files: static/\1
   upload: static/(.*\.css)
 
-- url: /(.*\.data)
-  mime_type: application/json
-  static_files: static/\1
-  upload: static/(.*\.data)
+#- url: /(.*\.data)
+#  mime_type: application/json
+#  static_files: static/\1
+#  upload: static/(.*\.data)
 
 - url: /(.*\.html)
   mime_type: text/html

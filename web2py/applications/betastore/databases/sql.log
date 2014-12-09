@@ -1413,3 +1413,116 @@ success!
 success!
 success!
 success!
+timestamp: 2014-12-08T14:59:32.150881
+ALTER TABLE auth_user ADD code CHAR(512);
+success!
+success!
+success!
+success!
+timestamp: 2014-12-08T14:59:32.206078
+ALTER TABLE bis_line_item ADD description_short CHAR(512);
+timestamp: 2014-12-08T14:59:32.216241
+ALTER TABLE bis_line_item ADD name CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+DROP TABLE bis_catalog;
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-12-08T16:10:35.888691
+CREATE TABLE bis_catalog(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    description CHAR(512),
+    code CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+DROP TABLE bis_category;
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-12-08T16:14:43.148594
+CREATE TABLE bis_category(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    description CHAR(512),
+    catalogs TEXT,
+    code CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

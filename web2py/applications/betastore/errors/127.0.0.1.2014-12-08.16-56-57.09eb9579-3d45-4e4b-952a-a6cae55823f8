@@ -1,0 +1,372 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.KeyError'> 'id'"
+p3
+sS'layer'
+p4
+S'/home/manohar/work/bisineer_store/web2py/applications/betastore/models/db1.py'
+p5
+sS'code'
+p6
+S'# -*- coding: utf-8 -*-\nfrom gluon.custom_import import track_changes; track_changes(True) # this is used to reload modules during import, if they are changed\nfrom gluon import current\nfrom gluon.storage import Storage\n\nlogger = logging.getLogger("web2py.app.betastore")\nlogger.setLevel(logging.DEBUG) # remove this when you go live\ncurrent.logger = logging.getLogger("web2py.app.betastore")\ncurrent.logger.setLevel(logging.DEBUG) # remove this when you go live\ncurrent.db = db\nauth.settings.create_user_groups = False\ncurrent.betastore_current = Storage()\n\n# catalog table\ndb.define_table(\n    \'bis_catalog\',\n    Field(\'name\', required=True),\n    Field(\'description\', required=True),\n    Field(\'code\', represent=lambda p,r: r.name),\n    format=\'%(name)s\'\n)\n\n# category table\ndb.define_table(\n    \'bis_category\',\n    Field(\'name\', required=True),\n    Field(\'description\', required=True),\n    Field(\'catalogs\', \'list:string\', requires=IS_IN_SET(db(db[\'bis_catalog\']).select(db[\'bis_catalog\'].name).as_dict())),\n    Field(\'code\', represent=lambda p,r: r.name),\n    format=\'%(name)s\'\n)\n\n# product table\ndb.define_table(\n    \'bis_product\',\n    Field(\'categories\', \'list:reference bis_category\'),\n    Field(\'name\', required=True),\n    Field(\'description_short\', \'string\', required=True),\n    Field(\'description_long\', \'text\'),\n    Field(\'unit_price\', \'double\'),\n    Field(\'on_sale\', \'boolean\'),\n    Field(\'rating\', \'double\'),\n    Field(\'image_urls\', \'list:string\'),\n    Field(\'in_stock\', \'integer\'),\n    Field(\'tax_rate\', \'double\'),\n    Field(\'volume\', \'list:integer\'),\n    Field(\'weight\', \'double\'),\n    Field(\'variant_products\', \'list:string\'),\n    Field(\'product_attributes\', \'json\'),\n    Field(\'specifications\', \'text\'),\n    Field(\'code\', represent=lambda p,r: r.name),\n    format=\'%(name)s-%(id)s\'\n)\n\ndb.define_table(\n    \'bis_price_type\',\n    Field(\'name\', required=True),\n    Field(\'price_description\'),\n    Field(\'code\', represent=lambda p,r: r.name),\n    format=\'%(name)s\'\n)\n\ndb.define_table(\n    \'bis_price\',\n    Field(\'product\', \'reference bis_product\'),\n    Field(\'price_type\', \'reference bis_price_type\'),\n    Field(\'amount\', \'double\', required=True),\n    Field(\'user_group\', \'reference auth_group\'),\n    Field(\'code\', represent=lambda p,r: \'%s-%s-%s\' %(r.product.name, r.user_group.role, r.price_type.name)),\n    format=lambda r: \'%s-%s-%s\' %(r.product.name, r.user_group.role, r.price_type.name)\n)\n\n# cart and order - same table is being used\ndb.define_table(\n    \'bis_cart_order\',\n    Field(\'email\'), # TODO need to change this relation to be based on user_id than email\n    Field(\'billing_id\'),\n    Field(\'shipping_id\'),\n    Field(\'created_on\',\'datetime\'),\n    Field(\'status\'),\n    Field(\'product_cost\', \'double\'),\n    Field(\'total_amount\', \'double\'),\n    Field(\'discount\', \'double\'),\n    Field(\'tax\', \'double\'),\n    Field(\'shipping_cost\', \'double\'),\n    Field(\'amount_due\', \'double\'),\n    Field(\'amount_paid\', \'double\'),\n    Field(\'line_items\', \'list:string\')\n)\n\n# order line items - 1 line item per product in the order\ndb.define_table(\n    \'bis_line_item\',\n    Field(\'order_id\'),\n    Field(\'product_id\'),\n    Field(\'quantity\', \'integer\'),\n    Field(\'total_amount\', \'double\'),\n    Field(\'discount\', \'double\'),\n    Field(\'tax\', \'double\'),\n    Field(\'created_on\',\'datetime\'),\n    Field(\'modified_on\', \'datetime\'),\n    Field(\'description_short\', \'string\', required=True),\n    Field(\'name\', required=True),\n)\n\n# for future, when you use mongoDB, probably you can merge these\ndb.define_table(\n    \'bis_delivery\',\n    Field(\'order_id\'),\n    Field(\'delivered_on\' \'datetime\'),\n    Field(\'invoice_id\')\n)\n\n# for future\ndb.define_table(\n    \'bis_invoice\',\n    Field(\'invoice_item_id\')\n)\n\n# for future\ndb.define_table(\n    \'bis_invoice_item\',\n    Field(\'product_id\'),\n    Field(\'quantity_id\'),\n    Field(\'amount\'),\n)\n\n# product features table\ndb.define_table(\n    \'product_features\',\n    Field(\'product\', \'reference bis_product\'),\n    Field(\'feature\', \'text\')\n)\n\n# products list table\ndb.define_table(\n    \'bis_products_list\',\n    Field(\'products\', \'json\')\n)\n\n# address table\ndb.define_table(\n    \'bis_address\',\n    Field(\'name\'),\n    Field(\'street_address\'),\n    Field(\'landmark\'),\n    Field(\'city\'),\n    Field(\'bis_state\'),\n    Field(\'country\'),\n    Field(\'pincode\'),\n    Field(\'phone_number\'),\n    Field(\'bis_type\'),\n    Field(\'user_id\'),\n    Field(\'user_group_id\'),\n    Field(\'order_id\'),\n    Field(\'created_on\',\'datetime\'),\n    Field(\'modified_on\', \'datetime\')\n)'
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__hash__'
+p12
+S"<method-wrapper '__hash__' of exceptions.KeyError object>"
+p13
+sS'__setattr__'
+p14
+S"<method-wrapper '__setattr__' of exceptions.KeyError object>"
+p15
+sS'__reduce_ex__'
+p16
+S'<built-in method __reduce_ex__ of exceptions.KeyError object>'
+p17
+sS'__getslice__'
+p18
+S"<method-wrapper '__getslice__' of exceptions.KeyError object>"
+p19
+sS'__getitem__'
+p20
+S"<method-wrapper '__getitem__' of exceptions.KeyError object>"
+p21
+sS'__setstate__'
+p22
+S'<built-in method __setstate__ of exceptions.KeyError object>'
+p23
+sS'__reduce__'
+p24
+S'<built-in method __reduce__ of exceptions.KeyError object>'
+p25
+sS'__str__'
+p26
+S"<method-wrapper '__str__' of exceptions.KeyError object>"
+p27
+sS'__format__'
+p28
+S'<built-in method __format__ of exceptions.KeyError object>'
+p29
+sS'__getattribute__'
+p30
+S"<method-wrapper '__getattribute__' of exceptions.KeyError object>"
+p31
+sS'__class__'
+p32
+S"<type 'exceptions.KeyError'>"
+p33
+sS'__unicode__'
+p34
+S'<built-in method __unicode__ of exceptions.KeyError object>'
+p35
+sS'__delattr__'
+p36
+S"<method-wrapper '__delattr__' of exceptions.KeyError object>"
+p37
+sS'__subclasshook__'
+p38
+S'<built-in method __subclasshook__ of type object>'
+p39
+sS'__repr__'
+p40
+S"<method-wrapper '__repr__' of exceptions.KeyError object>"
+p41
+sS'args'
+p42
+S"('id',)"
+p43
+sS'__dict__'
+p44
+S'{}'
+p45
+sS'__sizeof__'
+p46
+S'<built-in method __sizeof__ of exceptions.KeyError object>'
+p47
+sS'__doc__'
+p48
+S"'Mapping key not found.'"
+p49
+sS'__init__'
+p50
+S"<method-wrapper '__init__' of exceptions.KeyError object>"
+p51
+sS'__new__'
+p52
+S'<built-in method __new__ of type object>'
+p53
+ssS'evalue'
+p54
+S"'id'"
+p55
+sS'request'
+p56
+cgluon.html
+XML_unpickle
+p57
+(S's\x97Y\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">ajax</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">application</td><td style="vertical-align:top;">:</td><td><div>betastore</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">args</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>db</div></td></tr><tr><td><div>bis_category</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cid</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">controller</td><td style="vertical-align:top;">:</td><td><div>appadmin</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_admin</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-58d3755e-58ec-4d8c-822d-c797c5ad7771<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_betastore</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-fcd49063-d923-4b67-868c-16a2b161c0f1<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">env</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_ENCODING</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_LANGUAGE</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.5</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CACHE_CONTROL</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONNECTION</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_COOKIE</td><td style="vertical-align:top;">:</td><td><div>session_id_betastore=127.0.0.1-fcd49063-d923-4b67-868c-16a2b161c0f1; session_id_admin=127.0.0.1-58d3755e-58ec-4d8c-822d-c797c5ad7771</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_HOST</td><td style="vertical-align:top;">:</td><td><div>localhost:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_REFERER</td><td style="vertical-align:top;">:</td><td><div>http://localhost:8000/betastore/appadmin/select/db?query=db.bis_category.id%3E0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_USER_AGENT</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:27.0) Gecko/20100101 Firefox/27.0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_INFO</td><td style="vertical-align:top;">:</td><td><div>/betastore/appadmin/insert/db/bis_category</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">QUERY_STRING</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_ADDR</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_PORT</td><td style="vertical-align:top;">:</td><td><div>57404</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_METHOD</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_NAME</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_NAME</td><td style="vertical-align:top;">:</td><td><div>manohar-VirtualBox</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PORT</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PROTOCOL</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SOFTWARE</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/home/manohar/work/bisineer_store/web2py/applications/betastore/&#x27;, &#x27;/home/manohar/work/bisineer_store/web2py/applications/welcome/&#x27;, &#x27;/home/manohar/work/bisineer_store/web2py/applications/admin/&#x27;, &#x27;/home/manohar/work/bisineer_store/web2py/applications/experiment/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/home/manohar/work/bisineer_store/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x941796c: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;127.0.1.1&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;manohar-VirtualBox&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: True, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;/home/manohar/work/bisineer_store/web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;test1234&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/home/manohar/work/bisineer_store/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_encoding</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_language</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.5</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cache_control</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_connection</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cookie</td><td style="vertical-align:top;">:</td><td><div>session_id_betastore=127.0.0.1-fcd49063-d923-4b67-868c-16a2b161c0f1; session_id_admin=127.0.0.1-58d3755e-58ec-4d8c-822d-c797c5ad7771</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_host</td><td style="vertical-align:top;">:</td><td><div>localhost:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_referer</td><td style="vertical-align:top;">:</td><td><div>http://localhost:8000/betastore/appadmin/select/db?query=db.bis_category.id%3E0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_user_agent</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:27.0) Gecko/20100101 Firefox/27.0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>manohar-VirtualBox</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>127.0.1.1</div></td></tr><tr><td><div>kerberos.dev.local</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_info</td><td style="vertical-align:top;">:</td><td><div>/betastore/appadmin/insert/db/bis_category</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">query_string</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_addr</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_port</td><td style="vertical-align:top;">:</td><td><div>57404</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_method</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_uri</td><td style="vertical-align:top;">:</td><td><div>/betastore/appadmin/insert/db/bis_category</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_name</td><td style="vertical-align:top;">:</td><td><div>manohar-VirtualBox</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_port</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_protocol</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_software</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_path</td><td style="vertical-align:top;">:</td><td><div>/home/manohar/work/bisineer_store/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.9.11-stable+timestamp.2014.09.15.23.35.11</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0xb730f0d0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x9392d7c&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x96d246c&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0xb730f0d0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x9392d7c&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x96d246c&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">extension</td><td style="vertical-align:top;">:</td><td><div>html</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">folder</td><td style="vertical-align:top;">:</td><td><div>/home/manohar/work/bisineer_store/web2py/applications/betastore/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">function</td><td style="vertical-align:top;">:</td><td><div>insert</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">global_settings</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/home/manohar/work/bisineer_store/web2py/applications/betastore/&#x27;, &#x27;/home/manohar/work/bisineer_store/web2py/applications/welcome/&#x27;, &#x27;/home/manohar/work/bisineer_store/web2py/applications/admin/&#x27;, &#x27;/home/manohar/work/bisineer_store/web2py/applications/experiment/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/home/manohar/work/bisineer_store/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x941796c: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;127.0.1.1&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;manohar-VirtualBox&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: True, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;/home/manohar/work/bisineer_store/web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;test1234&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/home/manohar/work/bisineer_store/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>manohar-VirtualBox</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>127.0.1.1</div></td></tr><tr><td><div>kerberos.dev.local</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.9.11-stable+timestamp.2014.09.15.23.35.11</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_https</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_local</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_restful</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_sheduler</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_shell</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">now</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2014, 12, 8, 16, 56, 57, 80122)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_args</td><td style="vertical-align:top;">:</td><td><div>db/bis_category</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_extension</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">url</td><td style="vertical-align:top;">:</td><td><div>/betastore/appadmin/insert/db/bis_category</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">utcnow</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2014, 12, 8, 21, 56, 57, 80152)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">uuid</td><td style="vertical-align:top;">:</td><td><div>betastore/127.0.0.1.2014-12-08.16-56-57.09eb9579-3d45-4e4b-952a-a6cae55823f8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi</td><td style="vertical-align:top;">:</td><td><div>&lt;gluon.main.LazyWSGI object at 0x970ceec&gt;</div></td></tr></table></div>'
+tRp58
+sS'frames'
+p59
+(lp60
+(dp61
+S'file'
+p62
+S'/home/manohar/work/bisineer_store/web2py/gluon/restricted.py'
+p63
+sS'dump'
+p64
+(dp65
+S'environment'
+p66
+S"{'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, 'CAT': <class 'gluon.html.CAT'>, ...}"
+p67
+sS'ccode'
+p68
+S'<code object <module> at 0x984a968, file "/home/...py/applications/betastore/models/db1.py", line 2>'
+p69
+ssS'lnum'
+p70
+I224
+sS'lines'
+p71
+(dp72
+I224
+S'        exec ccode in environment'
+p73
+sI225
+S'    except HTTP:'
+p74
+sI226
+S'        raise'
+p75
+sI227
+S'    except RestrictedError:'
+p76
+sI228
+S'        # do not encapsulate (obfuscate) the original RestrictedError'
+p77
+sI219
+S'    try:'
+p78
+sI220
+S'        if isinstance(code, types.CodeType):'
+p79
+sI221
+S'            ccode = code'
+p80
+sI222
+S'        else:'
+p81
+sI223
+S'            ccode = compile2(code, layer)'
+p82
+ssS'call'
+p83
+S'(code="# -*- coding: utf-8 -*-\\nfrom gluon.custom_import...atetime\'),\\n    Field(\'modified_on\', \'datetime\')\\n)", environment={\'A\': <class \'gluon.html.A\'>, \'ANY_OF\': <class \'gluon.validators.ANY_OF\'>, \'ASSIGNJS\': <function ASSIGNJS>, \'Auth\': <class \'gluon.tools.Auth\'>, \'B\': <class \'gluon.html.B\'>, \'BEAUTIFY\': <class \'gluon.html.BEAUTIFY\'>, \'BODY\': <class \'gluon.html.BODY\'>, \'BR\': <class \'gluon.html.BR\'>, \'BUTTON\': <class \'gluon.html.BUTTON\'>, \'CAT\': <class \'gluon.html.CAT\'>, ...}, layer=\'/home/manohar/work/bisineer_store/web2py/applications/betastore/models/db1.py\')'
+p84
+sS'func'
+p85
+S'restricted'
+p86
+sa(dp87
+g62
+S'/home/manohar/work/bisineer_store/web2py/applications/betastore/models/db1.py'
+p88
+sg64
+(dp89
+S'db'
+p90
+S'<DAL uri="sqlite://storage.sqlite">'
+p91
+sS').select'
+p92
+S'undefined'
+p93
+sS'Field'
+p94
+S"<class 'gluon.dal.Field'>"
+p95
+sS'IS_IN_SET'
+p96
+S"<class 'gluon.validators.IS_IN_SET'>"
+p97
+sS'].name'
+p98
+g93
+sS'requires'
+p99
+g93
+ssg70
+I28
+sg71
+(dp100
+I32
+S''
+sI23
+S'# category table'
+p101
+sI24
+S'db.define_table('
+p102
+sI25
+S"    'bis_category',"
+p103
+sI26
+S"    Field('name', required=True),"
+p104
+sI27
+S"    Field('description', required=True),"
+p105
+sI28
+S"    Field('catalogs', 'list:string', requires=IS_IN_SET(db(db['bis_catalog']).select(db['bis_catalog'].name).as_dict())),"
+p106
+sI29
+S"    Field('code', represent=lambda p,r: r.name),"
+p107
+sI30
+S"    format='%(name)s'"
+p108
+sI31
+S')'
+ssg83
+S'()'
+p109
+sg85
+S'<module>'
+p110
+sa(dp111
+g62
+S'/home/manohar/work/bisineer_store/web2py/gluon/dal.py'
+p112
+sg64
+(dp113
+S'rows'
+p114
+S"[{'name': 'bisineer_online'}, {'name': 'bisineer_staged'}]"
+p115
+sS'r'
+S"{'name': 'bisineer_online'}"
+p116
+sS'key'
+p117
+S"'id'"
+p118
+sS'builtindict'
+p119
+S"<type 'dict'>"
+p120
+ssg70
+I11290
+sg71
+(dp121
+I11285
+S'        rows = self.as_list(compact, storage_to_dict, datetime_to_str, custom_types)'
+p122
+sI11286
+S"        if isinstance(key, str) and key.count('.')==1:"
+p123
+sI11287
+S"            (table, field) = key.split('.')"
+p124
+sI11288
+S'            return dict([(r[table][field], r) for r in rows])'
+p125
+sI11289
+S'        elif isinstance(key, str):'
+p126
+sI11290
+S'            return dict([(r[key], r) for r in rows])'
+p127
+sI11291
+S'        else:'
+p128
+sI11292
+S'            return dict([(key(r), r) for r in rows])'
+p129
+sI11293
+S''
+sI11294
+S"    def as_trees(self, parent_name='parent_id', children_name='children', render=False):"
+p130
+ssg83
+S"(self=<Rows (2)>, key='id', compact=True, storage_to_dict=True, datetime_to_str=False, custom_types=None)"
+p131
+sg85
+S'as_dict'
+p132
+sasS'pyver'
+p133
+S'Python 2.7.3: /usr/bin/python (prefix: /usr)'
+p134
+sS'session'
+p135
+g57
+(S's\xbf\x01\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_orderby</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_query</td><td style="vertical-align:top;">:</td><td><div>db.bis_category.id&gt;0</div></td></tr></table></div>'
+tRp136
+sS'etype'
+p137
+S"<type 'exceptions.KeyError'>"
+p138
+sS'date'
+p139
+S'Mon Dec  8 16:56:57 2014'
+p140
+sS'response'
+p141
+g57
+(S's#\x18\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">body</td><td style="vertical-align:top;">:</td><td><div>&lt;cStringIO.StringO object at 0x9630580&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_betastore</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-fcd49063-d923-4b67-868c-16a2b161c0f1<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div>/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">delimiters</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>{{</div></td></tr><tr><td><div>}}</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">files</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">form_label_separator</td><td style="vertical-align:top;">:</td><td><div>: </div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">formstyle</td><td style="vertical-align:top;">:</td><td><div>table3cols</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generic_patterns</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>json</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">headers</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">X-Powered-By</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">menu</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">meta</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">models_to_run</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>^\\w+\\.py$</div></td></tr><tr><td><div>^appadmin/\\w+\\.py$</div></td></tr><tr><td><div>^appadmin/insert/\\w+\\.py$</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">postprocessing</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_compression_level</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_expires</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_key</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_data_name</td><td style="vertical-align:top;">:</td><td><div>session_data_betastore</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_file</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;/home/manohar/work/bisineer_store/web2py/applications/betastore/sessions/142/026/127.0.0.1-fcd49063-d923-4b67-868c-16a2b161c0f1&#x27;, mode &#x27;rb+&#x27; at 0xb075f7b0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_filename</td><td style="vertical-align:top;">:</td><td><div>/home/manohar/work/bisineer_store/web2py/applications/betastore/sessions/127.0.0.1-fcd49063-d923-4b67-868c-16a2b161c0f1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_hash</td><td style="vertical-align:top;">:</td><td><div>e7f22b793b0b41db46af95c2e4200646</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-fcd49063-d923-4b67-868c-16a2b161c0f1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_name</td><td style="vertical-align:top;">:</td><td><div>session_id_betastore</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_locked</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_masterapp</td><td style="vertical-align:top;">:</td><td><div>betastore</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_new</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_storage_type</td><td style="vertical-align:top;">:</td><td><div>file</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">status</td><td style="vertical-align:top;">:</td><td><div>200</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">view</td><td style="vertical-align:top;">:</td><td><div>appadmin/insert.html</div></td></tr></table></div>'
+tRp142
+sS'locals'
+p143
+(dp144
+S'compact'
+p145
+S'True'
+p146
+sS'multi'
+p147
+S'False'
+p148
+sS'rows'
+p149
+S"[{'name': 'bisineer_online'}, {'name': 'bisineer_staged'}]"
+p150
+sS'f'
+S"<Row {'name': 'bisineer_online'}>"
+p151
+sS'self'
+p152
+S'<Rows (2)>'
+p153
+sS'datetime_to_str'
+p154
+g148
+sS'storage_to_dict'
+p155
+g146
+sS'r'
+S"{'name': 'bisineer_online'}"
+p156
+sS'key'
+p157
+S"'id'"
+p158
+sS'v'
+S"'bisineer_online'"
+p159
+sS'custom_types'
+p160
+S'None'
+p161
+sssS'traceback'
+p162
+S'Traceback (most recent call last):\n  File "/home/manohar/work/bisineer_store/web2py/gluon/restricted.py", line 224, in restricted\n    exec ccode in environment\n  File "/home/manohar/work/bisineer_store/web2py/applications/betastore/models/db1.py", line 28, in <module>\n    Field(\'catalogs\', \'list:string\', requires=IS_IN_SET(db(db[\'bis_catalog\']).select(db[\'bis_catalog\'].name).as_dict())),\n  File "/home/manohar/work/bisineer_store/web2py/gluon/dal.py", line 11290, in as_dict\n    return dict([(r[key], r) for r in rows])\nKeyError: \'id\'\n'
+p163
+s.
