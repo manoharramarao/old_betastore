@@ -5,6 +5,7 @@ from daos import line_item_dao
 from daos import auth_membership
 from daos import price_dao
 from daos import price_type_dao
+from daos import auth_group_dao
 
 # logger = current.logger
 # db = current.db
@@ -41,7 +42,7 @@ def _flush_cart_with_prices(cart):
 
 def get_prices(cart):
 	current.logger.debug("inside get_prices")
-	price_type_id = price_type_dao.get_default_price_id()
+	price_type_code = price_type_dao.get_default_price_code()
 
 	# get groups for ths logged in user
 	if current.session.auth.user is not None:
@@ -54,17 +55,17 @@ def get_prices(cart):
 		for membership in memberships:
 			membership = Storage(membership)
 			current.logger.debug("groupd id is " + str(membership.group_id))
-			cart = _get_prices(cart, membership, price_type_id)
+			cart = _get_prices(cart, membership, price_type_code)
 	_flush_cart_with_prices(cart)
 	return cart
 
-def _get_prices(cart, membership, price_type_id):
+def _get_prices(cart, membership, price_type_code):
 	line_items_with_price = []
 	cart.total_amount = 0
 	for line_item in cart.line_items:
 		# right now we are keeping it to getting the default price type
 		line_item = Storage(line_item)
-		price = price_dao.get_price(line_item['product_id'], membership.group_id, price_type_id)
+		price = price_dao.get_price(line_item['product_code'], auth_group_dao.get_group_code(membership.group_id), price_type_code)
 		if price is not None:
 			line_item.unit_price = price.amount
 			line_item.total_amount = line_item.quantity * price.amount
@@ -95,7 +96,7 @@ def _save_line_items(line_items, order):
 	line_items = _clean_line_items(line_items)
 	for line_item in line_items:
 		line_item = Storage(line_item)
-		line_item.order_id = order.id
+		line_item.order_code = order.code
 		line_item = line_item_dao.save(line_item)
 		order.line_items.append(line_item.id)
 	return order
@@ -104,14 +105,14 @@ def _merge_line_items_with_same_product(line_items):
 	new_line_items = {}
 	for line_item in line_items:
 		line_item = Storage(line_item)
-		if str(line_item.product_id) in new_line_items:
-			new_line_items[str(line_item.product_id)].quantity += line_item.quantity
+		if str(line_item.product_code) in new_line_items:
+			new_line_items[str(line_item.product_code)].quantity += line_item.quantity
 		else:
-			new_line_items[str(line_item.product_id)] = line_item
+			new_line_items[str(line_item.product_code)] = line_item
 	return new_line_items.values()
 
 def _clean_line_items(line_items):
-	line_item_attributes = ['id', 'order_id', 'product_id', 'quantity', 'total_amount', 'discount', 'tax', 'created_on', 'line_item', 'description_short', 'name']
+	line_item_attributes = ['id', 'order_code', 'product_code', 'quantity', 'total_amount', 'discount', 'tax', 'created_on', 'line_item', 'description_short', 'name']
 	new_line_items = []
 	for line_item in line_items:
 		for key in line_item.keys():

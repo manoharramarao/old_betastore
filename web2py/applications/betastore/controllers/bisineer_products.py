@@ -9,7 +9,7 @@ def get_products():
 		result = {}
 		query1 = db.bis_product.id > 0
 		query2 = db.bis_product.categories.contains(category['categoryName'])
-		fields = ['name','unit_price', 'description_short', 'rating', 'image_urls','id']
+		fields = ['name','unit_price', 'description_short', 'rating', 'image_urls','id', 'code']
 		none_fields = ['categories', 'specifications', 'weight', 'product_attributes', 'volume', 'variant_products', 'description_long', 'tax_rate', 'in_stock']
 		sel = [db.bis_product[field] for field in fields]
 		#rows = db(query1 & query2).select(*sel, projection=True).sort(lambda row:row.name) # when we use project=True, it is giving each production 4 times
@@ -23,6 +23,7 @@ def get_products():
 				for field in none_fields:
 					# TODO Fix me. It is complaining categories attribute doesn't exist
 					del row[field]
+				logger.debug("next row " + str(row))
 			result['products'] = rows
 		else:
 			result = {"result": "failure", "msg": "no products available"}

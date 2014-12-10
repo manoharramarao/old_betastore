@@ -11,12 +11,14 @@ current.db = db
 auth.settings.create_user_groups = False
 current.betastore_current = Storage()
 
+# GAE_NOTE uuid did not work so code is defined in each and every table
+
 # catalog table
 db.define_table(
     'bis_catalog',
     Field('name', required=True),
     Field('description', required=True),
-    Field('code', compute=lambda r: '%s' %(r.name)),
+    Field('code', represent=lambda p,r: '%s' %(r.name)),
     format='%(name)s'
 )
 
@@ -26,7 +28,8 @@ db.define_table(
     Field('name', required=True),
     Field('description', required=True),
     Field('catalogs', 'list:string'),
-    Field('code', compute=lambda r: r.name),
+    Field('categories', 'list:string'),
+    Field('code', represent=lambda p,r: '%s' %(r.name)),
     format='%(name)s'
 )
 
@@ -35,6 +38,7 @@ db.define_table(
     'bis_product',
     Field('categories', 'list:string'),
     Field('name', required=True),
+    Field('display_name', 'string'),
     Field('description_short', 'string', required=True),
     Field('description_long', 'text'),
     Field('unit_price', 'double'),
@@ -46,9 +50,10 @@ db.define_table(
     Field('volume', 'list:integer'),
     Field('weight', 'double'),
     Field('variant_products', 'list:string'),
+    Field('composit_products', 'list:string'),
     Field('product_attributes', 'json'),
     Field('specifications', 'text'),
-    Field('code', compute=lambda r: r.name),
+    Field('code', represent=lambda p,r: '%s' %(r.name)),
     format='%(name)s'
 )
 
@@ -56,36 +61,36 @@ db.define_table(
     'bis_price_type',
     Field('name', required=True),
     Field('price_description'),
-    Field('code', compute=lambda r: r.name),
+    Field('code', represent=lambda p,r: '%s' %(r.name)),
     format='%(name)s'
+)
+
+db.define_table(
+    'bis_price',
+    Field('product_code'),
+    Field('price_type_code'),
+    Field('amount', 'double', required=True),
+    Field('user_group_code'),
+    Field('code'),
+    format=lambda r: '%s-%s-%s' %(r.product, r.user_group, r.price_type)
 )
 
 # db.define_table(
 #     'bis_price',
-#     Field('product'),
-#     Field('price_type'),
+#     Field('product', 'reference bis_product'),
+#     Field('price_type', 'reference bis_price_type'),
 #     Field('amount', 'double', required=True),
-#     Field('user_group'),
-#     Field('code', represent=lambda p,r: '%s-%s-%s' %(r.product, r.user_group, r.price_type)),
-#     format=lambda r: '%s-%s-%s' %(r.product, r.user_group, r.price_type)
+#     Field('user_group', 'reference auth_group'),
+#     Field('code', represent=lambda p,r: '%s-%s-%s' %(r.product.name, r.user_group.role, r.price_type.name)),
+#     format=lambda r: '%s-%s-%s' %(r.product.name, r.user_group.role, r.price_type.name)
 # )
-
-db.define_table(
-    'bis_price',
-    Field('product', 'reference bis_product'),
-    Field('price_type', 'reference bis_price_type'),
-    Field('amount', 'double', required=True),
-    Field('user_group', 'reference auth_group'),
-    Field('code', represent=lambda p,r: '%s-%s-%s' %(r.product.name, r.user_group.role, r.price_type.name)),
-    format=lambda r: '%s-%s-%s' %(r.product.name, r.user_group.role, r.price_type.name)
-)
 
 # cart and order - same table is being used
 db.define_table(
     'bis_cart_order',
-    Field('email'), # TODO need to change this relation to be based on user_id than email
-    Field('billing_id'),
-    Field('shipping_id'),
+    Field('user_code'), # GAE_NOTE didn't specify represent attribute so no dropdown will be shown in admin tool
+    Field('billing_code'),
+    Field('shipping_code'),
     Field('created_on','datetime'),
     Field('status'),
     Field('product_cost', 'double'),
@@ -95,14 +100,15 @@ db.define_table(
     Field('shipping_cost', 'double'),
     Field('amount_due', 'double'),
     Field('amount_paid', 'double'),
-    Field('line_items', 'list:string')
+    Field('line_items', 'list:string'),
+    Field('code')
 )
 
 # order line items - 1 line item per product in the order
 db.define_table(
     'bis_line_item',
-    Field('order_id'),
-    Field('product_id'),
+    Field('order_code'),# not creating actual reference because no.of order might grow very large and admin app might fail in preparing dropdown
+    Field('product_code'),
     Field('quantity', 'integer'),
     Field('total_amount', 'double'),
     Field('discount', 'double'),
@@ -111,41 +117,47 @@ db.define_table(
     Field('modified_on', 'datetime'),
     Field('description_short', 'string', required=True),
     Field('name', required=True),
+    Field('code')
 )
 
 # for future, when you use mongoDB, probably you can merge these
 db.define_table(
     'bis_delivery',
-    Field('order_id'),
+    Field('order_code'),
     Field('delivered_on' 'datetime'),
-    Field('invoice_id')
+    Field('invoice_code'),
+    Field('code')
 )
 
 # for future
 db.define_table(
     'bis_invoice',
-    Field('invoice_item_id')
+    Field('invoice_item_code'),
+    Field('code')
 )
 
 # for future
 db.define_table(
     'bis_invoice_item',
-    Field('product_id'),
-    Field('quantity_id'),
+    Field('product_code'),
+    Field('quantity'),
     Field('amount'),
+    Field('code')
 )
 
 # product features table
 db.define_table(
     'product_features',
-    Field('product', 'reference bis_product'),
-    Field('feature', 'text')
+    Field('product_code', 'list:string'),
+    Field('feature', 'text'),
+    Field('code')
 )
 
 # products list table
 db.define_table(
     'bis_products_list',
-    Field('products', 'json')
+    Field('products', 'json'),
+    Field('code')
 )
 
 # address table
@@ -160,11 +172,12 @@ db.define_table(
     Field('pincode'),
     Field('phone_number'),
     Field('bis_type'),
-    Field('user_id'),
-    Field('user_group_id'),
-    Field('order_id'),
+    Field('user_code'),
+    Field('user_group_code'),
+    Field('order_code'),
     Field('created_on','datetime'),
-    Field('modified_on', 'datetime')
+    Field('modified_on', 'datetime'),
+    Field('code')
 )
 
 
@@ -173,7 +186,11 @@ db.define_table(
 
 ####################################################################################################
 
+# TODO The below statements should be executed if someone is accessing adming application. Because, these
+#models are executed for each and every request. But you really don't want to run this on every request
+
 # this part is just because of the GAE. looking at performance impact, we might have to remove this.
+# TODO gae-note - get the value of code directly and not from name. This did not work with GAE. so doing it with name
 global_temp_bis_catalog_codes = db(db['bis_catalog']).select(db['bis_catalog'].name).as_list()
 global_bis_catalog_codes = []
 for catalog_code in global_temp_bis_catalog_codes:
@@ -209,6 +226,22 @@ for auth_group_code in global_temp_auth_group_codes:
 db['bis_category'].catalogs.requires=IS_IN_SET(global_bis_catalog_codes,multiple=True)
 db['bis_product'].variant_products.requires=IS_IN_SET(global_bis_product_codes, multiple=True)
 db['bis_product'].categories.requires=requires=IS_IN_SET(global_bis_category_codes, multiple=True)
-# db['bis_price'].product.requires=IS_IN_SET(global_bis_product_codes, multiple=True)
-# db['bis_price'].price_type.requires=IS_IN_SET(global_bis_price_type_codes, multiple=True)
-# db['bis_price'].user_group.requires=IS_IN_SET(global_auth_group_codes, multiple=True)
+db['bis_price'].product_code.requires=IS_IN_SET(global_bis_product_codes)
+db['bis_price'].price_type_code.requires=IS_IN_SET(global_bis_price_type_codes)
+db['bis_price'].user_group_code.requires=IS_IN_SET(global_auth_group_codes)
+db['bis_price'].code.represent=lambda p,r: '%s-%s-%s' %(r.product_code, r.user_group_code, r.price_type_code)
+db['bis_line_item'].product_code.requires=IS_IN_SET(global_bis_product_codes)
+db['bis_line_item'].code.represent=lambda p,r: '%s-%s' %(r.product_code, r.id)
+
+# GAE_NOTE attribute default on code doesn't populate value. So using attribute represent
+db['bis_cart_order'].code.represent=lambda p,r: '%s-%s' %(r.user_code, r.id)
+
+# below ones will change. They are yet to implement
+db['bis_delivery'].code.represent=lambda p,r: '%s' %(r.id)
+db['bis_invoice'].code.represent=lambda p,r: '%s' %(r.id)
+db['bis_invoice_item'].code.represent=lambda p,r: '%s' %(r.id)
+db['product_features'].code.represent=lambda p,r: '%s' %(r.id)
+db['bis_products_list'].code.represent=lambda p,r: '%s' %(r.id)
+db['bis_address'].code.represent=lambda p,r: '%s' %(r.id)
+
+db['product_features'].product_code.requires=IS_IN_SET(global_bis_product_codes)

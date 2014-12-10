@@ -130,11 +130,11 @@ def get_cart():
 	user = session.auth.user
 	order = Storage()
 	cart = Storage()
-	order = db((db.bis_cart_order.email == user.email) & (db.bis_cart_order.status == "cart")).select().first()
+	order = db((db.bis_cart_order.user_code == user.code) & (db.bis_cart_order.status == "cart")).select().first()
 	cart.line_items = []
 	if order is not None:
-		cart.line_items = db((db.bis_line_item.order_id == order.id)).select(db.bis_line_item.product_id, db.bis_line_item.quantity, 
-			db.bis_line_item.id, db.bis_line_item.description_short,db.bis_line_item.name, projection=True)
+		cart.line_items = db((db.bis_line_item.order_code == order.code)).select(db.bis_line_item.product_code, db.bis_line_item.quantity, 
+			db.bis_line_item.code, db.bis_line_item.description_short,db.bis_line_item.name, projection=True)
 	for line_item in cart.line_items:
 		print line_item
 	return cart

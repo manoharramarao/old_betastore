@@ -1,5 +1,6 @@
 from gluon.storage import Storage
 from gluon import *
+from daos import auth_user_dao
 
 def save_order():
 	pass
@@ -25,13 +26,17 @@ def get_cart():
 	if order.status = cart => then it is called cart
 	cart is fetched based on signed in user's email and the order status
 	"""
-	cart = current.db((current.db.bis_cart_order.email == current.session.auth.user.email) & (current.db.bis_cart_order.status == "cart")).select().first()
+	current.logger.debug("user_code for logged in user is " + str(current.session.auth.user))
+	cart = current.db((current.db.bis_cart_order.user_code == current.session.auth.user.code) & (current.db.bis_cart_order.status == "cart")).select().first()
 	if cart is None:
 		cart = Storage()
-		cart.email = current.session.auth.user.email
+		cart.user_code = current.session.auth.user.code
 		cart.status = "cart" # this is how it is differentiated between cart and order
+		print str(cart)
 		cart.id = current.db.bis_cart_order.insert(**cart)
+		cart.code = current.session.auth.user.code + "-" + str(cart.id) # this is cart.code
 	else:
+		cart.code = current.session.auth.user.code + "-" + str(cart.id) # this is cart.code
 		cart = Storage(cart.as_dict())
 	return cart
 

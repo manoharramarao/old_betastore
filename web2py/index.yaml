@@ -12,6 +12,15 @@ indexes:
 
 - kind: bis_line_item
   properties:
+  - name: order_code
+  - name: code
+  - name: description_short
+  - name: name
+  - name: product_code
+  - name: quantity
+
+- kind: bis_line_item
+  properties:
   - name: order_id
   - name: description_short
   - name: name

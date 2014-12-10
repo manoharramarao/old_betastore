@@ -63,6 +63,10 @@ auth.settings.extra_fields['auth_user'] = [
     Field('phone_number', 'string', required=True),
     Field('code', represent=lambda p,r: '%s-%s' %(r.email, r.phone_number))
 ]
+auth.settings.extra_fields['auth_group'] = [
+    Field('code', represent=lambda p,r: '%s' %(r.role))
+]
+
 auth.define_tables()
 # TODO add secure=True to the above argument so that login is done only on https
 
