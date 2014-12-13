@@ -15,6 +15,7 @@ def register():
         user = Storage(json.loads(input_json))
         result = Storage()
         user.password = user.password.encode('utf8')
+        user.code = str(user.email) + "-" + str(user.phone_number)
         user = auth.register_bare(**user)
         if user is not None:
             default_group = db(db.auth_group.role=="default").select().first().as_dict()

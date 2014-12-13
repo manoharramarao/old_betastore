@@ -2,7 +2,7 @@ from gluon import *
 from gluon.storage import Storage
 from daos import cart_order_dao
 from daos import line_item_dao
-from daos import auth_membership
+from daos import auth_membership_dao
 from daos import price_dao
 from daos import price_type_dao
 from daos import auth_group_dao
@@ -46,20 +46,24 @@ def get_prices(cart):
 
 	# get groups for ths logged in user
 	if current.session.auth.user is not None:
-		memberships = auth_membership.get_memberships(current.session.auth.user.id)
+		memberships = auth_membership_dao.get_memberships(current.session.auth.user.id)
 		memberships = list(memberships.values())
 	# assuming that user belongs to only one group as of now
 	# either by the time we reach here, we should be knowing the user group for this session
 	# or just default to some user group or build a login on how to select which user group
+	# or build a mechanism which user group takes priority over which one. so that prices are pulled
+	# for that specific user group.
 	if memberships:
 		for membership in memberships:
 			membership = Storage(membership)
 			current.logger.debug("groupd id is " + str(membership.group_id))
 			cart = _get_prices(cart, membership, price_type_code)
+	current.logger.debug("cart after prices, before flushing " + str(cart))
 	_flush_cart_with_prices(cart)
 	return cart
 
 def _get_prices(cart, membership, price_type_code):
+	current.logger.debug("_get_prices")
 	line_items_with_price = []
 	cart.total_amount = 0
 	for line_item in cart.line_items:

@@ -95,6 +95,7 @@ db.define_table(
     'product',
     Field('product_name'),
     Field('product_description'),
+    Field('uuid', length=64, default=lambda: str(uuid.uuid4())),
     format='%(product_name)s'
 )
 
@@ -111,7 +112,7 @@ db.define_table(
     Field('price_type', 'reference price_type'),
     Field('amount'),
     Field('user_group', 'reference auth_group'),
-    Field('code', represent=lambda p,r: '%s-%s-%s' %(r.product.name, r.user_group.role, r.price_type.name)),
+    Field('code', represent=lambda p,r: '%s-%s-%s' %(r.product.product_name, r.user_group.role, r.price_type.price_type)),
     format=lambda r: '%s-%s-%s' %(r.product.product_name, r.user_group.role, r.price_type.price_type)
 )
 #db.price.code.represent = lambda p,r: '%s-%s-%s' %(r.product.name, r.user_group.role, r.price_type.name)

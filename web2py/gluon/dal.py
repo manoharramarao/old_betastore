@@ -5128,6 +5128,17 @@ class GoogleDatastoreAdapter(NoSQLAdapter):
             table._tableobj = classobj(table._tablename, (polymodel._tableobj, ), myfields)
         else:
             raise SyntaxError("polymodel must be None, True, a table or a tablename")
+
+        # tried using this. It did work. So commenting it out.
+        # Set defaults on the GAE model class (tableobj)
+        # for propname, prop in table._tableobj._properties.iteritems():
+        #     field = getattr(table, propname, None)
+        #     if None != field and isinstance(field, Field):
+        #         if self.use_ndb:
+        #             prop._default = field.default
+        #         else:
+        #             prop.default = field.default
+
         return None
 
     def expand(self, expression, field_type=None):

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import copy
+import uuid
 
 #########################################################################
 ## This scaffolding model makes your app work on Google App Engine too
@@ -95,6 +96,7 @@ db.define_table(
     'product',
     Field('product_name'),
     Field('product_description'),
+    Field('uuid', length=64, default=lambda: str(uuid.uuid4())),
     format='%(product_name)s'
 )
 
