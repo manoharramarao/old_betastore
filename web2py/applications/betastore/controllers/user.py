@@ -5,6 +5,17 @@ from bisineer_http_status_codes import HTTPStatusCodes
 # try something like
 def index(): return dict(message="hello from bisineer_user.py")
 
+if False:
+    from gluon import *
+    request = current.request
+    response = current.response
+    session = current.response
+    cache = current.cache
+    db = current.db
+    auth = current.auth
+    logger = current.logger
+
+
 def register():
     """
     registers user by using auth.bare_register method

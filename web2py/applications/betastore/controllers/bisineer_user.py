@@ -2,6 +2,17 @@
 
 import gluon.contrib.simplejson as json
 
+if False:
+    from gluon import *
+    request = current.request
+    response = current.response
+    session = current.response
+    cache = current.cache
+    db = current.db
+    auth = current.auth
+    logger = current.logger
+
+
 # try something like
 def index(): return dict(message="hello from bisineer_user.py")
 
