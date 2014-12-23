@@ -4,6 +4,7 @@ import gluon.contrib.simplejson as json
 from gluon.storage import Storage
 from services import cart_order_service
 from v1.order.service import OrderService
+from v1.price.service import PriceService
 
 #import jsonpickle
 
@@ -37,7 +38,7 @@ def flush_cart():
         raise HTTP(500, 'Ouch!! something went wrong. Please try again')
     return
 
-
+# TODO move this to order services
 @auth.requires_login()
 def get_cart():
     user = session.auth.user
@@ -61,8 +62,12 @@ def get_prices():
     returns prices for all line items
     """
     logger.debug("inside get_prices")
-    cart = Storage(json.loads(request.body.read()))
-    logger.debug("cart before getting prices " + str(cart))
-    cart_order_service.flush_prices(cart)
-    logger.debug("cart after getting prices " + str(cart))
+    price_service = PriceService()
+    try:
+        cart = Storage(json.loads(request.body.read()))
+        price_service.flush_order_price(cart)
+    except Exception, e:
+        logger.error(str(e))
+        traceback.print_exc()
+        raise HTTP(500, 'Ouch!! something went wrong. Please try again')
     return cart

@@ -21,9 +21,9 @@ if False:
 #     auth = current.auth
 
 logger = logging.getLogger("web2py.app.betastore")
-logger.setLevel(logging.DEBUG) # remove this when you go live
+logger.setLevel(logging.DEBUG)  # remove this when you go live
 current.logger = logging.getLogger("web2py.app.betastore")
-current.logger.setLevel(logging.DEBUG) # remove this when you go live
+current.logger.setLevel(logging.DEBUG)  # remove this when you go live
 current.db = db
 auth.settings.create_user_groups = False
 current.betastore_current = Storage()
@@ -119,7 +119,7 @@ db.define_table(
     Field('shipping_cost', 'double'),
     Field('amount_due', 'double'),
     Field('amount_paid', 'double'),
-    Field('line_items', 'list:string'),
+    Field('line_items', 'list:string'),  # TODO change this to json data type
     Field('code', length=64, default=lambda: str(uuid.uuid4()))
 )
 
@@ -199,7 +199,7 @@ db.define_table(
     Field('user_code'),
     Field('user_group_code'),
     Field('order_code'),
-    Field('created_on','datetime'),
+    Field('created_on', 'datetime'),
     Field('modified_on', 'datetime'),
     Field('code')
 )
@@ -249,7 +249,7 @@ for auth_group_code in global_temp_auth_group_codes:
 
 db['bis_category'].catalogs.requires = IS_IN_SET(global_bis_catalog_codes,multiple=True)
 db['bis_product'].variant_products.requires = IS_IN_SET(global_bis_product_codes, multiple=True)
-db['bis_product'].categories.requires=requires = IS_IN_SET(global_bis_category_codes, multiple=True)
+db['bis_product'].categories.requires = requires = IS_IN_SET(global_bis_category_codes, multiple=True)
 db['bis_price'].product_code.requires = IS_IN_SET(global_bis_product_codes)
 db['bis_price'].price_type_code.requires = IS_IN_SET(global_bis_price_type_codes)
 db['bis_price'].user_group_code.requires = IS_IN_SET(global_auth_group_codes)
@@ -261,11 +261,11 @@ db['bis_line_item'].product_code.requires = IS_IN_SET(global_bis_product_codes)
 #db['bis_cart_order'].code.represent=lambda p,r: '%s-%s' %(r.user_code, r.id)
 
 # below ones will change. They are yet to implement
-db['bis_delivery'].code.represent=lambda p,r: '%s' %(r.id)
-db['bis_invoice'].code.represent=lambda p,r: '%s' %(r.id)
-db['bis_invoice_item'].code.represent=lambda p,r: '%s' %(r.id)
-db['product_features'].code.represent=lambda p,r: '%s' %(r.id)
-db['bis_products_list'].code.represent=lambda p,r: '%s' %(r.id)
-db['bis_address'].code.represent=lambda p,r: '%s' %(r.id)
+db['bis_delivery'].code.represent = lambda p, r: '%s' %(r.id)
+db['bis_invoice'].code.represent = lambda p, r: '%s' %(r.id)
+db['bis_invoice_item'].code.represent = lambda p, r: '%s' %(r.id)
+db['product_features'].code.represent = lambda p, r: '%s' %(r.id)
+db['bis_products_list'].code.represent = lambda p, r: '%s' %(r.id)
+db['bis_address'].code.represent = lambda p, r: '%s' %(r.id)
 
 db['product_features'].product_code.requires=IS_IN_SET(global_bis_product_codes)
