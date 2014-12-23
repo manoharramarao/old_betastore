@@ -12,6 +12,10 @@ if False:
 
 
 def import_data():
+    """
+    Imports data into the db from db_<arg>.csv file for all arguments in the same sequence it is sent
+    :return:
+    """
     try:
         for arg in request.args:
             db.import_from_csv_file(open('./static/data/db_'+arg+'.csv', 'r'))
@@ -20,10 +24,15 @@ def import_data():
         raise HTTP(500, str(e))
     return "success"
 
+
 def delete_data():
+    """
+    Deletes data from DB for tables sent in request arguments in the sequence it is sent
+    :return:
+    """
     try:
         for arg in request.args:
-            db(db[arg].id>0).delete()
+            db(db[arg].id > 0).delete()
     except Exception, e:
         traceback.print_exc()
         raise HTTP(500, str(e))

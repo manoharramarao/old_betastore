@@ -33,7 +33,7 @@ def get_cart():
     if cart is None:
         cart = Storage()
         cart.user_code = current.session.auth.user.code
-        cart.status = "cart" # this is how it is differentiated between cart and order
+        cart.status = "cart"  # this is how it is differentiated between cart and order
         print str(cart)
         cart.code = str(uuid.uuid4())
         cart.id = current.db.bis_cart_order.insert(**cart)

@@ -1,8 +1,24 @@
 # -*- coding: utf-8 -*-
-from gluon.custom_import import track_changes; track_changes(True) # this is used to reload modules during import, if they are changed
+from gluon.custom_import import track_changes;
+track_changes(True)  # this is used to reload modules during import, if they are changed
 from gluon import current
 from gluon.storage import Storage
 import uuid
+from datetime import datetime
+import logging
+
+
+if False:
+    from gluon import *
+    from db import *
+# if False:
+#     from gluon import *
+#     request = current.request
+#     response = current.response
+#     session = current.response
+#     cache = current.cache
+#     db = current.db
+#     auth = current.auth
 
 logger = logging.getLogger("web2py.app.betastore")
 logger.setLevel(logging.DEBUG) # remove this when you go live
@@ -74,7 +90,7 @@ db.define_table(
     Field('amount', 'double', required=True),
     Field('user_group_code'),
     Field('code'),
-    format=lambda r: '%s-%s-%s' %(r.product, r.user_group, r.price_type)
+    format=lambda r: '%s-%s-%s' % (r.product, r.user_group, r.price_type)
 )
 
 # db.define_table(
@@ -93,7 +109,8 @@ db.define_table(
     Field('user_code'), # GAE_NOTE didn't specify represent attribute so no dropdown will be shown in admin tool
     Field('billing_code'),
     Field('shipping_code'),
-    Field('created_on','datetime'),
+    Field('created_on', 'datetime', default=request.now),
+    Field('modified_on', 'datetime', default=datetime.now()),
     Field('status'),
     Field('product_cost', 'double'),
     Field('total_amount', 'double'),
@@ -103,24 +120,29 @@ db.define_table(
     Field('amount_due', 'double'),
     Field('amount_paid', 'double'),
     Field('line_items', 'list:string'),
-    Field('code', length=64, default=lambda:str(uuid.uuid4()))
+    Field('code', length=64, default=lambda: str(uuid.uuid4()))
 )
 
 # order line items - 1 line item per product in the order
 db.define_table(
     'bis_line_item',
-    Field('order_code'),# not creating actual reference because no.of order might grow very large and admin app might fail in preparing dropdown
+    Field('order_code'),  # not creating actual reference because no.of order might grow very large and admin app might
+    # fail in preparing dropdown
     Field('product_code'),
     Field('quantity', 'integer'),
+    Field('unit_price', 'double'),
     Field('total_amount', 'double'),
     Field('discount', 'double'),
     Field('tax', 'double'),
-    Field('created_on','datetime'),
-    Field('modified_on', 'datetime'),
+    Field('created_on', 'datetime', default=request.now),
+    Field('modified_on', 'datetime', default=datetime.now()),  # TODO give the default value
     Field('description_short', 'string', required=True),
     Field('name', required=True),
-    Field('code', length=64, default=lambda:str(uuid.uuid4()))
+    Field('code', length=64, default=lambda: str(uuid.uuid4()))
 )
+
+db.bis_line_item.created_on.readable = db.bis_line_item.created_on.writable = False
+db.bis_cart_order.created_on.readable = db.bis_cart_order.created_on.writable = False
 
 # for future, when you use mongoDB, probably you can merge these
 db.define_table(
@@ -225,14 +247,14 @@ for auth_group_code in global_temp_auth_group_codes:
     auth_group_code = dict(auth_group_code)
     global_auth_group_codes.append(auth_group_code['role'])
 
-db['bis_category'].catalogs.requires=IS_IN_SET(global_bis_catalog_codes,multiple=True)
-db['bis_product'].variant_products.requires=IS_IN_SET(global_bis_product_codes, multiple=True)
-db['bis_product'].categories.requires=requires=IS_IN_SET(global_bis_category_codes, multiple=True)
-db['bis_price'].product_code.requires=IS_IN_SET(global_bis_product_codes)
-db['bis_price'].price_type_code.requires=IS_IN_SET(global_bis_price_type_codes)
-db['bis_price'].user_group_code.requires=IS_IN_SET(global_auth_group_codes)
-db['bis_price'].code.represent=lambda p,r: '%s-%s-%s' %(r.product_code, r.user_group_code, r.price_type_code)
-db['bis_line_item'].product_code.requires=IS_IN_SET(global_bis_product_codes)
+db['bis_category'].catalogs.requires = IS_IN_SET(global_bis_catalog_codes,multiple=True)
+db['bis_product'].variant_products.requires = IS_IN_SET(global_bis_product_codes, multiple=True)
+db['bis_product'].categories.requires=requires = IS_IN_SET(global_bis_category_codes, multiple=True)
+db['bis_price'].product_code.requires = IS_IN_SET(global_bis_product_codes)
+db['bis_price'].price_type_code.requires = IS_IN_SET(global_bis_price_type_codes)
+db['bis_price'].user_group_code.requires = IS_IN_SET(global_auth_group_codes)
+db['bis_price'].code.represent = lambda p,r: '%s-%s-%s' %(r.product_code, r.user_group_code, r.price_type_code)
+db['bis_line_item'].product_code.requires = IS_IN_SET(global_bis_product_codes)
 #db['bis_line_item'].code.represent=lambda p,r: '%s-%s' %(r.product_code, r.id)
 
 # GAE_NOTE attribute default on code doesn't populate value. So using attribute represent

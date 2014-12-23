@@ -14,6 +14,21 @@
 
 import logging
 
+if False:
+    from gluon import *
+    from db import *
+    request = current.request
+    session = current.session
+    response = current.response
+# if False:
+#     from gluon import *
+#     request = current.request
+#     response = current.response
+#     session = current.response
+#     cache = current.cache
+#     db = current.db
+#     auth = current.auth
+
 logger = logging.getLogger("web2py.app.betastore")
 logger.setLevel(logging.DEBUG) # remove this when you go live
 

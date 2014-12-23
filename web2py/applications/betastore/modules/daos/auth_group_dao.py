@@ -15,3 +15,7 @@ def get_default_group_code():
 def get_group_code(id):
     row = current.db(current.db.auth_group.id == id).select().first().as_dict()
     return row['code']
+
+def get_group_role(id):
+    row = current.db(current.db.auth_group.id == id).select().first().as_dict()
+    return row['role']
