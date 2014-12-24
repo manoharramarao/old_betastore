@@ -31,7 +31,7 @@ def save(line_item):
 # 	else:
 # 		line_item.code
 
-
+# this method is not used as of now
 def get_line_item(line_item):
     """
     Duplicate records are identified based on the follwoing priority

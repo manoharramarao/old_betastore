@@ -106,7 +106,7 @@ db.define_table(
 # cart and order - same table is being used
 db.define_table(
     'bis_cart_order',
-    Field('user_code'), # GAE_NOTE didn't specify represent attribute so no dropdown will be shown in admin tool
+    Field('user_code'),  # GAE_NOTE didn't specify represent attribute so no dropdown will be shown in admin tool
     Field('billing_code'),
     Field('shipping_code'),
     Field('created_on', 'datetime', default=request.now),
@@ -122,6 +122,18 @@ db.define_table(
     Field('line_items', 'list:string'),  # TODO change this to json data type
     Field('code', length=64, default=lambda: str(uuid.uuid4()))
 )
+
+# when moved to mongo DB, you would want to merge this with the order
+# shipping_details - shipping details of the order
+db.define_table(
+    'bis_shipping_details',
+    Field('address_code'),
+    Field('order_code'),
+    Field('line_item_codes', 'list:string'),
+    Field('scheduled_delivery_date', 'datetime'),
+    Field('code', length=64, default=lambda: str(uuid.uuid4()))
+)
+
 
 # order line items - 1 line item per product in the order
 db.define_table(
@@ -201,7 +213,7 @@ db.define_table(
     Field('order_code'),
     Field('created_on', 'datetime'),
     Field('modified_on', 'datetime'),
-    Field('code')
+    Field('code', length=64, default=lambda: str(uuid.uuid4()))
 )
 
 
@@ -211,7 +223,7 @@ db.define_table(
 ####################################################################################################
 
 # TODO The below statements should be executed if someone is accessing admin application. Because, these
-#models are executed for each and every request. But you really don't want to run this on every request
+# models are executed for each and every request. But you really don't want to run this on every request
 
 # this part is just because of the GAE. looking at performance impact, we might have to remove this.
 # TODO gae-note - get the value of code directly and not from name. This did not work with GAE. so doing it with name
