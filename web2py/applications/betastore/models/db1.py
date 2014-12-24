@@ -227,6 +227,11 @@ db.define_table(
 
 # this part is just because of the GAE. looking at performance impact, we might have to remove this.
 # TODO gae-note - get the value of code directly and not from name. This did not work with GAE. so doing it with name
+global_temp_bis_user_codes = db(db['auth_user']).select(db['auth_user'].email, db['auth_user'].phone_number).as_list()
+global_bis_user_codes = []
+for user_code in global_temp_bis_user_codes:
+    global_bis_user_codes.append(dict(user_code)['email'] + "-" + dict(user_code)['phone_number'])
+
 global_temp_bis_catalog_codes = db(db['bis_catalog']).select(db['bis_catalog'].name).as_list()
 global_bis_catalog_codes = []
 for catalog_code in global_temp_bis_catalog_codes:
@@ -267,6 +272,7 @@ db['bis_price'].price_type_code.requires = IS_IN_SET(global_bis_price_type_codes
 db['bis_price'].user_group_code.requires = IS_IN_SET(global_auth_group_codes)
 db['bis_price'].code.represent = lambda p,r: '%s-%s-%s' %(r.product_code, r.user_group_code, r.price_type_code)
 db['bis_line_item'].product_code.requires = IS_IN_SET(global_bis_product_codes)
+db['bis_address'].user_code.requires = IS_IN_SET(global_bis_user_codes)
 #db['bis_line_item'].code.represent=lambda p,r: '%s-%s' %(r.product_code, r.id)
 
 # GAE_NOTE attribute default on code doesn't populate value. So using attribute represent

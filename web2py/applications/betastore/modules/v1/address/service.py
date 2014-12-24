@@ -33,12 +33,11 @@ class AddressService(object):
 
     def get_addresses(self, user):
         """
-        Returns all shipping addresses of the user
+        Returns all addresses of the logged in user. If user is anonymous, then returns None
 
-        :param user: db.bis_auth_user - user for which shipping addresses are fetched
         :return: db.bis_address array
         """
-        pass
+        return address_dao.get_addresses(user)
 
     def save_address(self, address):
         """

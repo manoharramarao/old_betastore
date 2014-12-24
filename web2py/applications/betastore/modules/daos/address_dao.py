@@ -5,8 +5,9 @@ import uuid
 
 logger = current.logger
 
+unwanted_attributes = ['bis_type', 'created_on', 'modified_on', 'user_group_code', 'user_code']
 
-def _validate_before_save(address):
+def _validate(address):
     """
     Validate address before saving it to the DB
 
@@ -14,6 +15,19 @@ def _validate_before_save(address):
     :return:
     """
     return True
+
+
+def _clean(addresses):
+    """
+    clean the address dictionary and remove unwanted and secure attributes before it leave dao layer.
+
+    :param addresses: db.bis_address array
+    :return: db.bis_address array
+    """
+    for address in addresses:
+        for key in unwanted_attributes:
+            del address[key]
+    return addresses
 
 
 def save_address(address):
@@ -33,11 +47,12 @@ def save_address(address):
         existing_address = current.db(current.db.bis_address.id == address.id).select().first()
     if existing_address is not None:
         address.code = existing_address.code
-        if _validate_before_save(address):
+        if _validate(address):
             address = current.db(current.db.bis_address.code == existing_address.code).update(**address)
     else:
         address.code = str(uuid.uuid4())
-        address.id = current.db.bis_address.insert(**address)
+        if _validate(address):
+            address.id = current.db.bis_address.insert(**address)
     return address
 
 
@@ -74,7 +89,13 @@ def get_addresses(user):
     """
     Returns addresses for the user
 
-    :param user: db.bis_auth_user - user for whom addresses has to be retrieved
+    :param user_code: db.bis_auth_user.code - user code of user for whom addresses has to be retrieved
     :return: db.bis_address - array of addresses for the specified user
     """
-    pass
+    current.logger.debug("user is " + str(user))
+    if user is not None and user.code is not None:
+        addresses = current.db(current.db.bis_address.user_code == user.code).select()
+        addresses = _clean(addresses)
+        return addresses
+    else:
+        return None
