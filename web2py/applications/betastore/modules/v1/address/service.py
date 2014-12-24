@@ -55,7 +55,7 @@ class AddressService(object):
 
     def save_new_shipping_address(self, address, order):
         """
-        associates new address as shipping address for the order
+        associates new address as shipping address for the order given
 
         :param address: db.bis_address
         :param order: db.bis_cart_order
