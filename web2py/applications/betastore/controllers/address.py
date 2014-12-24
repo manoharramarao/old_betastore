@@ -23,8 +23,25 @@ if False:
     logger = current.logger
 
 
-def save_address(address):
-    pass
+def save_address():
+    """
+    insert/update the address into the DB
+
+    :param address: db.bis_address
+    :return: db.bis_address
+    """
+    logger.debug("inside save_address")
+    try:
+        input_json = request.body.read()
+        address = Storage(json.loads(input_json))
+        address_service = AddressService()
+        if auth.is_logged_in():
+            address = address_service.save_address(address, auth.user)
+    except Exception, e:
+        logger.error(str(e))
+        traceback.print_exc()
+        raise HTTP(500, "Ouch!! something went wrong. Please try again")
+    return address
 
 
 def get_addresses():

@@ -39,7 +39,7 @@ class AddressService(object):
         """
         return address_dao.get_addresses(user)
 
-    def save_address(self, address):
+    def save_address(self, address, user):
         """
         if found updates the address or else creates new one and saves it to DB for the logged in user.
         Returns the same address
@@ -48,9 +48,8 @@ class AddressService(object):
         :param address: db.bis_address - address to save to DB
         :return: db.bis_address - newly created address
         """
-        if auth.is_logged_in():
-            address.user_code = current.session.auth.user.code
-        address_dao.save_address(address)
+        address.user_code = user.code
+        return address_dao.save_address(address)
 
     def save_new_shipping_address(self, address, order):
         """

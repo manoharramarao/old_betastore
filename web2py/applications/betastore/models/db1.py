@@ -207,12 +207,12 @@ db.define_table(
     Field('country'),
     Field('pincode'),
     Field('phone_number'),
-    Field('bis_type'),
     Field('user_code'),
     Field('user_group_code'),
     Field('order_code'),
     Field('created_on', 'datetime'),
     Field('modified_on', 'datetime'),
+    Field('address_type'),
     Field('code', length=64, default=lambda: str(uuid.uuid4()))
 )
 
