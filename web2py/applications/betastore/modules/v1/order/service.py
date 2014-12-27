@@ -57,6 +57,15 @@ class OrderService(object):
         server_cart = cart_order_dao.save(server_cart)
         return server_cart
 
+    def save_comments(self, cart):
+        """
+        Saves comments of the order to bis_cart_order table in DB
+
+        :param cart: db.bis_cart_order
+        :return: cart after saving the comments
+        """
+        pass
+
     def _merge_line_items_with_same_product(self, line_items):
         """
         Line items with duplicate products are merged

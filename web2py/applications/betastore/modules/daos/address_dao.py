@@ -43,6 +43,9 @@ def save_address(address):
     """
     current.logger.debug("address is " + str(address))
     existing_address = Storage()
+    # TODO if address name is same then raise exception duplicate address
+    # if address.name is not None:
+    #     existing_address = current.db(current.db.bis_address.name.lower() == address.name.lower()).select().first()
     if address.code is not None:
         existing_address = current.db(current.db.bis_address.code == address.code).select().first()
     elif address.id is not None:

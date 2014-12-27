@@ -119,6 +119,7 @@ db.define_table(
     Field('shipping_cost', 'double'),
     Field('amount_due', 'double'),
     Field('amount_paid', 'double'),
+    Field('comments', 'text'),
     Field('line_items', 'list:string'),  # TODO change this to json data type
     Field('code', length=64, default=lambda: str(uuid.uuid4()))
 )
