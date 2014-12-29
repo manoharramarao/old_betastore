@@ -8,6 +8,7 @@ if False:
     cache = current.cache
     db = current.db
     auth = current.auth
+    logger = current.logger
 
 
 def get_categories():

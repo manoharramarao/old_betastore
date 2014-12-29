@@ -47,6 +47,8 @@ db.define_table(
     Field('description', required=True),
     Field('catalogs', 'list:string'),
     Field('categories', 'list:string'),
+    Field('ancestors', 'list:string'),
+    Field('children', 'list:string'),
     Field('code', represent=lambda p,r: '%s' %(r.name)),
     format='%(name)s'
 )

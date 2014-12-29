@@ -32,7 +32,7 @@ if False:
 logger = logging.getLogger("web2py.app.betastore")
 logger.setLevel(logging.DEBUG) # remove this when you go live
 
-
+# db = DAL('sqlite://storage.sqlite',pool_size=1,check_reserved=['all'], lazy_tables=True)
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
     db = DAL('sqlite://storage.sqlite',pool_size=1,check_reserved=['all'], lazy_tables=True)
@@ -157,3 +157,10 @@ use_janrain(auth, filename='private/janrain.key')
 #     Field('variant_products', 'list:string'),
 #     format='%(name)s'
 # )
+
+# db for testing
+import copy
+test_db = DAL('sqlite://testing.sqlite')  # Name and location of the test DB file
+for tablename in db.tables:  # Copy tables!
+    table_copy = [copy.copy(f) for f in db[tablename]]
+    test_db.define_table(tablename, *table_copy)
