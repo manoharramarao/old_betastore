@@ -16,6 +16,7 @@ class TestCategoriesDao(unittest.TestCase):
     """
     To run this, from web2py root, execute this command
     python web2py.py -S betastore -M -R applications/betastore/tests/daos/test_categories_dao.py
+
     """
     def setUp(self):
         db(db.bis_category.id > 0).delete()
