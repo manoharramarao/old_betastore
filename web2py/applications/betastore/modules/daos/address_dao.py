@@ -7,7 +7,7 @@ logger = current.logger
 
 unwanted_attributes = ['address_type', 'created_on', 'modified_on', 'user_group_code', 'user_code']
 
-def _validate(address):
+def _is_valid(address):
     """
     Validate address before saving it to the DB
 
@@ -24,9 +24,11 @@ def _clean(addresses):
     :param addresses: db.bis_address array
     :return: db.bis_address array
     """
+    # TODO need to optimize this
     for address in addresses:
         for key in unwanted_attributes:
-            del address[key]
+            if key in address:
+                del address[key]
     return addresses
 
 
@@ -52,11 +54,11 @@ def save_address(address):
         existing_address = current.db(current.db.bis_address.id == address.id).select().first()
     if existing_address:
         address.code = existing_address.code
-        if _validate(address):
+        if _is_valid(address):
             address = current.db(current.db.bis_address.code == existing_address.code).update(**address)
     else:
         address.code = str(uuid.uuid4())
-        if _validate(address):
+        if _is_valid(address):
             address.id = current.db.bis_address.insert(**address)
     return address
 
@@ -100,6 +102,7 @@ def get_addresses(user):
     current.logger.debug("user is " + str(user))
     if user is not None and user.code is not None:
         addresses = current.db(current.db.bis_address.user_code == user.code).select()
+        # TODO remove the assignemnt
         addresses = _clean(addresses)
         return addresses
     else:

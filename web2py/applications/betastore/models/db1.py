@@ -44,12 +44,12 @@ db.define_table(
 db.define_table(
     'bis_category',
     Field('name', required=True),
+    Field('display_name', required=True),
     Field('description', required=True),
     Field('catalogs', 'list:string'),
-    Field('categories', 'list:string'),
     Field('ancestors', 'list:string'),
     Field('children', 'list:string'),
-    Field('code', represent=lambda p,r: '%s' %(r.name)),
+    Field('code', compute=lambda r: '%s' %r.name),
     format='%(name)s'
 )
 
@@ -268,6 +268,8 @@ for auth_group_code in global_temp_auth_group_codes:
     global_auth_group_codes.append(auth_group_code['role'])
 
 db['bis_category'].catalogs.requires = IS_IN_SET(global_bis_catalog_codes,multiple=True)
+db['bis_category'].ancestors.requires = IS_IN_SET(global_bis_category_codes, multiple=True)
+db['bis_category'].children.requires = IS_IN_SET(global_bis_category_codes, multiple=True)
 db['bis_product'].variant_products.requires = IS_IN_SET(global_bis_product_codes, multiple=True)
 db['bis_product'].categories.requires = requires = IS_IN_SET(global_bis_category_codes, multiple=True)
 db['bis_price'].product_code.requires = IS_IN_SET(global_bis_product_codes)
@@ -290,3 +292,11 @@ db['bis_products_list'].code.represent = lambda p, r: '%s' %(r.id)
 db['bis_address'].code.represent = lambda p, r: '%s' %(r.id)
 
 db['product_features'].product_code.requires=IS_IN_SET(global_bis_product_codes)
+
+# db for testing
+import copy
+test_db = DAL('sqlite://testing.sqlite')  # Name and location of the test DB file
+# db = DAL('google:datastore+ndb', lazy_tables=True)
+for tablename in db.tables:  # Copy tables!
+    table_copy = [copy.copy(f) for f in db[tablename]]
+    test_db.define_table(tablename, *table_copy)
