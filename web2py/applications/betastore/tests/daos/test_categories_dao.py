@@ -34,7 +34,7 @@ class TestCategoriesDao(unittest.TestCase):
         self.assertEquals(1, len(categories))
 
     def test_get_child_categories(self):
-        categories = category_dao.get_child_categories("Pumps")
+        categories = category_dao.get_category("Pumps")
         # print "categories are "
         # print categories
         for category in categories:

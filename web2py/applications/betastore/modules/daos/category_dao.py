@@ -5,7 +5,7 @@ from gluon import *
 from daos import auth_user_dao
 import uuid
 
-unwanted_attributes = ['name', 'catalogs']
+unwanted_attributes = ['id', 'name', 'catalogs']
 
 
 def _clean(categories):
@@ -39,21 +39,16 @@ def get_first_level_categories():
     """
     Returns top most categories
 
-    :return: [{bis_category.display_name, bis_category.code}]
+    :return: [{bis_category}]
     """
-    return _clean(current.db(current.db.bis_category.ancestors == []).select(current.db.bis_category.display_name,
-                                                                             current.db.bis_category.code,
-                                                                             current.db.bis_category.name,
-                                                                             current.db.bis_category.catalogs))
+    return _clean(current.db(current.db.bis_category.ancestors == []).select(current.db.bis_category.ALL))
 
 
-def get_child_categories(category_code):
+def get_category(category_code):
     """
     Returns child categories
 
     :param category_code: db.bis_category.code
-    :return: [{bis_category.children, bis_category.catalogs, bis_category.code}]
+    :return: [{bis_category}]
     """
-    return _clean(current.db(current.db.bis_category.code == category_code).select(current.db.bis_category.children,
-                                                                                   current.db.bis_category.catalogs,
-                                                                                   current.db.bis_category.code))
+    return _clean(current.db(current.db.bis_category.code == category_code).select(current.db.bis_category.ALL))

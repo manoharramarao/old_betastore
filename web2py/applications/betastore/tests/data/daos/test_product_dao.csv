@@ -1,0 +1,3 @@
+TABLE bis_product
+bis_product.id,bis_product.categories,bis_product.name,bis_product.display_name,bis_product.description_short,bis_product.description_long,bis_product.unit_price,bis_product.on_sale,bis_product.rating,bis_product.image_urls,bis_product.in_stock,bis_product.tax_rate,bis_product.volume,bis_product.weight,bis_product.variant_products,bis_product.composit_products,bis_product.product_attributes,bis_product.specifications,bis_product.code
+1,|Submercible Pumps|,05HP,0.5 HP,0.5 HP description,0.5 HP description long,12500.0,True,3.0,||,<NULL>,<NULL>,||,<NULL>,||,||,<NULL>,,05HP
