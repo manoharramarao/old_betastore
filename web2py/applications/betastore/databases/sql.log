@@ -1526,3 +1526,2467 @@ success!
 success!
 success!
 success!
+timestamp: 2014-12-20T19:13:10.952034
+ALTER TABLE bis_catalog ADD uuid CHAR(64);
+success!
+timestamp: 2014-12-20T19:13:10.993367
+ALTER TABLE bis_category ADD categories TEXT;
+success!
+timestamp: 2014-12-20T19:13:11.012561
+ALTER TABLE bis_product ADD display_name CHAR(512);
+timestamp: 2014-12-20T19:13:11.032585
+ALTER TABLE bis_product ADD composit_products TEXT;
+success!
+timestamp: 2014-12-20T19:13:11.065165
+ALTER TABLE auth_group ADD code CHAR(512);
+success!
+timestamp: 2014-12-20T19:13:11.101352
+ALTER TABLE bis_price ADD price_type_code CHAR(512);
+timestamp: 2014-12-20T19:13:11.118685
+ALTER TABLE bis_price ADD user_group_code CHAR(512);
+timestamp: 2014-12-20T19:13:11.139988
+ALTER TABLE bis_price ADD product_code CHAR(512);
+success!
+timestamp: 2014-12-20T19:13:11.174750
+ALTER TABLE bis_line_item ADD code CHAR(64);
+timestamp: 2014-12-20T19:13:11.203023
+ALTER TABLE bis_line_item ADD order_code CHAR(512);
+timestamp: 2014-12-20T19:13:11.223248
+ALTER TABLE bis_line_item ADD product_code CHAR(512);
+success!
+timestamp: 2014-12-20T19:13:11.260416
+ALTER TABLE bis_delivery ADD code CHAR(512);
+timestamp: 2014-12-20T19:13:11.281331
+ALTER TABLE bis_delivery ADD order_code CHAR(512);
+timestamp: 2014-12-20T19:13:11.298834
+ALTER TABLE bis_delivery ADD invoice_code CHAR(512);
+success!
+timestamp: 2014-12-20T19:13:11.330078
+ALTER TABLE bis_invoice ADD invoice_item_code CHAR(512);
+timestamp: 2014-12-20T19:13:11.349127
+ALTER TABLE bis_invoice ADD code CHAR(512);
+success!
+timestamp: 2014-12-20T19:13:11.379749
+ALTER TABLE bis_invoice_item ADD code CHAR(512);
+timestamp: 2014-12-20T19:13:11.394118
+ALTER TABLE bis_invoice_item ADD product_code CHAR(512);
+timestamp: 2014-12-20T19:13:11.413654
+ALTER TABLE bis_invoice_item ADD quantity CHAR(512);
+success!
+timestamp: 2014-12-20T19:13:11.441849
+ALTER TABLE product_features ADD code CHAR(512);
+timestamp: 2014-12-20T19:13:11.454833
+ALTER TABLE product_features ADD product_code TEXT;
+success!
+timestamp: 2014-12-20T19:13:11.488140
+ALTER TABLE bis_products_list ADD code CHAR(512);
+success!
+timestamp: 2014-12-20T19:13:11.519645
+ALTER TABLE bis_address ADD code CHAR(512);
+timestamp: 2014-12-20T19:13:11.541010
+ALTER TABLE bis_address ADD user_group_code CHAR(512);
+timestamp: 2014-12-20T19:13:11.568826
+ALTER TABLE bis_address ADD user_code CHAR(512);
+timestamp: 2014-12-20T19:13:11.588972
+ALTER TABLE bis_address ADD order_code CHAR(512);
+success!
+success!
+success!
+success!
+timestamp: 2014-12-20T19:13:11.719312
+ALTER TABLE bis_cart_order ADD code CHAR(64);
+timestamp: 2014-12-20T19:13:11.735153
+ALTER TABLE bis_cart_order ADD billing_code CHAR(512);
+timestamp: 2014-12-20T19:13:11.761950
+ALTER TABLE bis_cart_order ADD user_code CHAR(512);
+timestamp: 2014-12-20T19:13:11.780847
+ALTER TABLE bis_cart_order ADD shipping_code CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-12-28T13:59:44.300309
+ALTER TABLE bis_line_item ADD unit_price DOUBLE;
+success!
+timestamp: 2014-12-28T13:59:44.345291
+ALTER TABLE bis_cart_order ADD comments TEXT;
+timestamp: 2014-12-28T13:59:44.354840
+ALTER TABLE bis_cart_order ADD modified_on TIMESTAMP;
+success!
+success!
+success!
+success!
+timestamp: 2014-12-28T13:59:44.473200
+ALTER TABLE bis_address ADD address_type CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-12-28T14:40:54.955485
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512),
+    phone_number CHAR(512),
+    code CHAR(512)
+);
+success!
+success!
+timestamp: 2014-12-28T14:40:55.026412
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT,
+    code CHAR(512)
+);
+success!
+success!
+timestamp: 2014-12-28T14:40:55.078701
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE
+);
+success!
+success!
+timestamp: 2014-12-28T14:40:55.116476
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2014-12-28T14:40:55.140141
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2014-12-28T14:40:55.160872
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-12-29T19:27:39.133691
+ALTER TABLE bis_category ADD ancestors TEXT;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-12-29T19:45:28.329320
+CREATE TABLE bis_shipping_details(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    address_code CHAR(512),
+    order_code CHAR(512),
+    line_item_codes TEXT,
+    scheduled_delivery_date TIMESTAMP,
+    code CHAR(64)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-12-29T20:38:53.621395
+ALTER TABLE bis_category ADD children TEXT;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-12-29T23:49:24.482236
+ALTER TABLE bis_category ADD display_name CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2014-12-30T00:20:13.897763
+CREATE TABLE bis_catalog(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    description CHAR(512),
+    code CHAR(512),
+    uuid CHAR(64)
+);
+success!
+timestamp: 2014-12-30T00:20:13.921540
+CREATE TABLE bis_category(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    display_name CHAR(512),
+    description CHAR(512),
+    catalogs TEXT,
+    ancestors TEXT,
+    children TEXT,
+    code CHAR(512)
+);
+success!
+timestamp: 2014-12-30T00:20:13.929918
+CREATE TABLE bis_product(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    categories TEXT,
+    name CHAR(512),
+    display_name CHAR(512),
+    description_short CHAR(512),
+    description_long TEXT,
+    unit_price DOUBLE,
+    on_sale CHAR(1),
+    rating DOUBLE,
+    image_urls TEXT,
+    in_stock INTEGER,
+    tax_rate DOUBLE,
+    volume TEXT,
+    weight DOUBLE,
+    variant_products TEXT,
+    composit_products TEXT,
+    product_attributes TEXT,
+    specifications TEXT,
+    code CHAR(512)
+);
+success!
+timestamp: 2014-12-30T00:20:13.935663
+CREATE TABLE bis_price_type(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    price_description CHAR(512),
+    code CHAR(512)
+);
+success!
+timestamp: 2014-12-30T00:20:13.942331
+CREATE TABLE bis_price(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_code CHAR(512),
+    price_type_code CHAR(512),
+    amount DOUBLE,
+    user_group_code CHAR(512),
+    code CHAR(512)
+);
+success!
+timestamp: 2014-12-30T00:20:13.948772
+CREATE TABLE bis_cart_order(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_code CHAR(512),
+    billing_code CHAR(512),
+    shipping_code CHAR(512),
+    created_on TIMESTAMP,
+    modified_on TIMESTAMP,
+    status CHAR(512),
+    product_cost DOUBLE,
+    total_amount DOUBLE,
+    discount DOUBLE,
+    tax DOUBLE,
+    shipping_cost DOUBLE,
+    amount_due DOUBLE,
+    amount_paid DOUBLE,
+    comments TEXT,
+    line_items TEXT,
+    code CHAR(64)
+);
+success!
+timestamp: 2014-12-30T00:20:13.972967
+CREATE TABLE bis_shipping_details(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    address_code CHAR(512),
+    order_code CHAR(512),
+    line_item_codes TEXT,
+    scheduled_delivery_date TIMESTAMP,
+    code CHAR(64)
+);
+success!
+timestamp: 2014-12-30T00:20:13.978313
+CREATE TABLE bis_line_item(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_code CHAR(512),
+    product_code CHAR(512),
+    quantity INTEGER,
+    unit_price DOUBLE,
+    total_amount DOUBLE,
+    discount DOUBLE,
+    tax DOUBLE,
+    created_on TIMESTAMP,
+    modified_on TIMESTAMP,
+    description_short CHAR(512),
+    name CHAR(512),
+    code CHAR(64)
+);
+success!
+timestamp: 2014-12-30T00:20:13.990628
+CREATE TABLE bis_delivery(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_code CHAR(512),
+    delivered_ondatetime CHAR(512),
+    invoice_code CHAR(512),
+    code CHAR(512)
+);
+success!
+timestamp: 2014-12-30T00:20:13.997800
+CREATE TABLE bis_invoice(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    invoice_item_code CHAR(512),
+    code CHAR(512)
+);
+success!
+timestamp: 2014-12-30T00:20:14.003964
+CREATE TABLE bis_invoice_item(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_code CHAR(512),
+    quantity CHAR(512),
+    amount CHAR(512),
+    code CHAR(512)
+);
+success!
+timestamp: 2014-12-30T00:20:14.010215
+CREATE TABLE product_features(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_code TEXT,
+    feature TEXT,
+    code CHAR(512)
+);
+success!
+timestamp: 2014-12-30T00:20:14.016426
+CREATE TABLE bis_products_list(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    products TEXT,
+    code CHAR(512)
+);
+success!
+timestamp: 2014-12-30T00:20:14.023903
+CREATE TABLE bis_address(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    street_address CHAR(512),
+    landmark CHAR(512),
+    city CHAR(512),
+    bis_state CHAR(512),
+    country CHAR(512),
+    pincode CHAR(512),
+    phone_number CHAR(512),
+    user_code CHAR(512),
+    user_group_code CHAR(512),
+    order_code CHAR(512),
+    created_on TIMESTAMP,
+    modified_on TIMESTAMP,
+    address_type CHAR(512),
+    code CHAR(64)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2015-01-01T02:56:28.691988
+ALTER TABLE bis_catalog ADD is_active CHAR(1);
+success!
+timestamp: 2015-01-01T02:56:28.759468
+ALTER TABLE bis_category ADD image_urls_description TEXT;
+timestamp: 2015-01-01T02:56:28.770778
+ALTER TABLE bis_category ADD long_description CHAR(512);
+timestamp: 2015-01-01T02:56:28.784176
+ALTER TABLE bis_category ADD user_group_code TEXT;
+success!
+timestamp: 2015-01-01T02:56:28.866234
+ALTER TABLE bis_product ADD addons TEXT;
+success!
