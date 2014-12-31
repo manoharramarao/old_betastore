@@ -1,0 +1,5 @@
+*.pyc
+*.table
+*.name
+web2py/.idea
+web2py/applications/betastore/databases
