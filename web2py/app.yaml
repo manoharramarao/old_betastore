@@ -21,6 +21,13 @@ handlers:
 # the parametric router's language logic. 
 # You cannot use them together.
 
+# below one is to get static files for admin app
+- url: /(.+?)/static/(.+)
+  static_files: applications/\1/static/\2
+  upload: applications/(.+?)/static/(.+)
+  secure: optional
+
+
 - url: /(.*\.css)
   mime_type: text/css
   static_files: static/\1

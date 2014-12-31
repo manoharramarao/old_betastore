@@ -35,6 +35,7 @@ db.define_table(
     'bis_catalog',
     Field('name', required=True),
     Field('description', required=True),
+    Field('is_active', 'boolean'),
     Field('code', represent=lambda p,r: '%s' %(r.name)),
     Field('uuid', length=64, default=lambda:str(uuid.uuid4())),
     format='%(name)s'
@@ -46,12 +47,23 @@ db.define_table(
     Field('name', required=True),
     Field('display_name', required=True),
     Field('description', required=True),
-    Field('catalogs', 'list:string'),
+    Field('long_description', required=True),
+    Field('catalogs', 'list:string', required=True),
     Field('ancestors', 'list:string'),
     Field('children', 'list:string'),
-    Field('code', compute=lambda r: '%s' %r.name),
+    Field('user_group_code', 'list:string', required=True),
+    Field('image_urls_description', 'json'),
+    Field('code', compute=lambda row: '%s' % row.name),
     format='%(name)s'
 )
+
+
+# db.define_table(
+#     'bis_category_user_group',
+#     Field('category_code', required=True),
+#     Field('user_group_code', 'list:string', required=True),
+#     Field('code', compute=lambda row: '%s-%s' % (row.category_code, row.user_group_code))
+# )
 
 # product table
 db.define_table(
@@ -276,6 +288,7 @@ db['bis_product'].categories.requires = requires = IS_IN_SET(global_bis_category
 db['bis_price'].product_code.requires = IS_IN_SET(global_bis_product_codes)
 db['bis_price'].price_type_code.requires = IS_IN_SET(global_bis_price_type_codes)
 db['bis_price'].user_group_code.requires = IS_IN_SET(global_auth_group_codes)
+db['bis_category'].user_group_code.requires = IS_IN_SET(global_auth_group_codes)
 db['bis_price'].code.represent = lambda p,r: '%s-%s-%s' %(r.product_code, r.user_group_code, r.price_type_code)
 db['bis_line_item'].product_code.requires = IS_IN_SET(global_bis_product_codes)
 db['bis_address'].user_code.requires = IS_IN_SET(global_bis_user_codes)

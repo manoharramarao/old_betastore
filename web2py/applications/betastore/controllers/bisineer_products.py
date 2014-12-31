@@ -45,8 +45,6 @@ def get_products():
     return result
 
 
-
-
 def get_product():
     try:
         row = db(db.bis_product.name=='Solar Water Heater1').select().as_dict()

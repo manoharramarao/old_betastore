@@ -1,8 +1,8 @@
 TABLE bis_category
-bis_category.id,bis_category.name,bis_category.display_name,bis_category.description,bis_category.catalogs,bis_category.ancestors,bis_category.children,bis_category.code
-20,Pumps,Pumps,Pumps description,|bisineer_online|bisineer_staged|,||,|Submercible Pumps|Booster Pumps|Hydro Booster Pumps|,Pumps
-21,Submercible Pumps,Submercible Pumps,Submercible Pumps description,|bisineer_online|bisineer_staged|,|Pumps|,||,Submercible Pumps
-22,Booster Pumps,Booster Pumps,Booster Pumps Description,|bisineer_online|bisineer_staged|,|Pumps|,|Twin Booster Pumps|Thrine Booster Pumps|,Booster Pumps
-23,Hydro Booster Pumps,Hydro Booster Pumps,Hydro Booster Pumps description,|bisineer_online|bisineer_staged|,|Pumps|,||,Hydro Booster Pumps
-24,Twin Booster Pumps,Twin Booster Pumps,Twin Booster Pumps description,|bisineer_online|bisineer_staged|,|Pumps|Booster Pumps|,||,Twin Booster Pumps
-25,Thrine Booster Pumps,Thrine Booster Pumps,Thrine Booster Pumps description,|bisineer_online|bisineer_staged|,|Pumps|Booster Pumps|,||,Thrine Booster Pumps
+bis_category.id,bis_category.name,bis_category.display_name,bis_category.description,bis_category.long_description,bis_category.catalogs,bis_category.ancestors,bis_category.children,bis_category.user_group_code,bis_category.code
+20,Pumps,Pumps,Pumps description,Pumps long description,|bisineer_online|bisineer_staged|,||,|Submercible Pumps|Booster Pumps|Hydro Booster Pumps|,default,Pumps
+21,Submercible Pumps,Submercible Pumps,Submercible Pumps description,Submercible Pumps long description,|bisineer_online|bisineer_staged|,|Pumps|,||,default,Submercible Pumps
+22,Booster Pumps,Booster Pumps,Booster Pumps Description,Booster Pumps long description,|bisineer_online|bisineer_staged|,|Pumps|,|Twin Booster Pumps|Thrine Booster Pumps|,default,Booster Pumps
+23,Hydro Booster Pumps,Hydro Booster Pumps,Hydro Booster Pumps description,Hydro Booster Pumps long description,|bisineer_online|bisineer_staged|,|Pumps|,||,default,Hydro Booster Pumps
+24,Twin Booster Pumps,Twin Booster Pumps,Twin Booster Pumps description,Twin Booster Pumps long description,|bisineer_online|bisineer_staged|,|Pumps|Booster Pumps|,||,default,Twin Booster Pumps
+25,Thrine Booster Pumps,Thrine Booster Pumps,Thrine Booster Pumps description,Thrine Booster Pumps long description,|bisineer_online|bisineer_staged|,|Pumps|Booster Pumps|,||,default,Thrine Booster Pumps
