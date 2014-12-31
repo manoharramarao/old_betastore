@@ -71,6 +71,7 @@ db.define_table(
     Field('weight', 'double'),
     Field('variant_products', 'list:string'),
     Field('composit_products', 'list:string'),
+    Field('addons', 'list:string'),
     Field('product_attributes', 'json'),
     Field('specifications', 'text'),
     Field('code', represent=lambda p,r: '%s' %(r.name)),
@@ -295,8 +296,8 @@ db['product_features'].product_code.requires=IS_IN_SET(global_bis_product_codes)
 
 # db for testing
 import copy
-test_db = DAL('sqlite://testing.sqlite')  # Name and location of the test DB file
-# db = DAL('google:datastore+ndb', lazy_tables=True)
-for tablename in db.tables:  # Copy tables!
-    table_copy = [copy.copy(f) for f in db[tablename]]
-    test_db.define_table(tablename, *table_copy)
+# test_db = DAL('sqlite://testing.sqlite')  # Name and location of the test DB file
+# # db = DAL('google:datastore+ndb', lazy_tables=True)
+# for tablename in db.tables:  # Copy tables!
+#     table_copy = [copy.copy(f) for f in db[tablename]]
+#     test_db.define_table(tablename, *table_copy)
