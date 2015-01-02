@@ -30,20 +30,8 @@ class CatalogServices(object):
     Does everything related to catalog, category and products
     """
 
-    def get_categories(self, product, category):
-        """
-        1. Returns just the names of all categories that product belong to irrespective of the depth of the category.
-        2. If category parameter is passed, then it returns all child categories of depth 1
-        3. If both args are none, then returns list of level 1 categories
-        :param product: db.bis_product.code
-        :param category: db.bis_category.code
-        :return: db.bis_category.code (which is actually category name)
-        """
-        categories = Storage()
-        if product is None and category is None:
-            categories = category_dao.get_first_level_categories()
-        elif category is None:
-            categories = category_dao.get_child_categories(category)
-        elif product is None:
-            categories = product_dao.get_categories(product)
-        return categories
+    def get_root_categories(self):
+        return category_dao.get_root_categories()
+
+    def get_child_categories(self, category=None):
+        return category_dao.get_child_categories(category)

@@ -51,6 +51,8 @@ class TestCategoriesDao(unittest.TestCase):
 
     def test_get_child_categories(self):
         categories = category_dao.get_child_categories("Pumps")
+        for category in categories:
+            current.logger.debug("category is " + str(category))
         self.assertIsNotNone(categories)
         self.assertEqual(3, len(categories))
         category_codes = []
