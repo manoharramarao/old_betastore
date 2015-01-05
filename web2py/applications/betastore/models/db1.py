@@ -288,7 +288,7 @@ db['bis_product'].categories.requires = requires = IS_IN_SET(global_bis_category
 db['bis_price'].product_code.requires = IS_IN_SET(global_bis_product_codes)
 db['bis_price'].price_type_code.requires = IS_IN_SET(global_bis_price_type_codes)
 db['bis_price'].user_group_code.requires = IS_IN_SET(global_auth_group_codes)
-db['bis_category'].user_group_code.requires = IS_IN_SET(global_auth_group_codes)
+db['bis_category'].user_group_code.requires = IS_IN_SET(global_auth_group_codes, multiple=True)
 db['bis_price'].code.represent = lambda p,r: '%s-%s-%s' %(r.product_code, r.user_group_code, r.price_type_code)
 db['bis_line_item'].product_code.requires = IS_IN_SET(global_bis_product_codes)
 db['bis_address'].user_code.requires = IS_IN_SET(global_bis_user_codes)
